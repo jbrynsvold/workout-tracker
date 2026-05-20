@@ -31,15 +31,15 @@
 }}
 body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:100vh}
 .topbar{background:var(--bg);border-bottom:0.5px solid var(--border);padding:0 1rem;position:sticky;top:0;z-index:100}
-.topbar-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px}
+.topbar-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px}
 .topbar h1{font-size:17px;font-weight:500}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0}
 .sync-dot.ok{background:var(--green)}.sync-dot.err{background:var(--red)}.sync-dot.loading{background:var(--amber);animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .sync-status{font-size:12px;color:var(--text3);display:flex;align-items:center;gap:6px}
-.container{max-width:860px;margin:0 auto;padding:1.25rem 1rem}
+.container{max-width:900px;margin:0 auto;padding:1.25rem 1rem}
 .tabs{display:flex;gap:2px;border-bottom:0.5px solid var(--border);margin-bottom:1.5rem;overflow-x:auto}
-.tab{padding:8px 14px;font-size:14px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--text2);border-bottom:2px solid transparent;margin-bottom:-0.5px;white-space:nowrap;font-family:var(--font);transition:color .15s,border-color .15s}
+.tab{padding:8px 12px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--text2);border-bottom:2px solid transparent;margin-bottom:-0.5px;white-space:nowrap;font-family:var(--font);transition:color .15s,border-color .15s}
 .tab.active{color:var(--text);border-bottom-color:var(--text)}.tab:hover:not(.active){color:var(--text)}
 .view{display:none}.view.active{display:block}
 .btn{padding:8px 14px;border-radius:var(--radius);font-size:14px;font-weight:500;cursor:pointer;border:0.5px solid var(--border2);background:var(--bg);color:var(--text);font-family:var(--font);transition:background .15s;white-space:nowrap}
@@ -51,30 +51,22 @@ body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
 .filter-btn{font-size:12px;padding:4px 10px;border-radius:var(--radius);border:0.5px solid var(--border);background:var(--bg);color:var(--text2);cursor:pointer;font-family:var(--font);transition:all .15s}
 .filter-btn.active{background:var(--text);color:var(--bg);border-color:var(--text)}
-
-/* Phase card */
 .phase-card{border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:1.25rem;border:0.5px solid var(--border)}
 .phase-card.p1{background:var(--green-bg);border-color:var(--green)}
 .phase-card.p2{background:var(--blue-bg);border-color:var(--blue)}
 .phase-card.p3{background:var(--amber-bg);border-color:var(--amber)}
 .phase-card .phase-title{font-size:13px;font-weight:500;margin-bottom:3px}
 .phase-card .phase-desc{font-size:12px;line-height:1.6;opacity:.85}
-
-/* Mood picker */
 .mood-bar{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1rem;margin-bottom:1.25rem}
 .mood-bar h3{font-size:13px;font-weight:500;color:var(--text2);margin-bottom:10px}
 .mood-options{display:flex;gap:8px;flex-wrap:wrap}
 .mood-btn{font-size:13px;padding:6px 14px;border-radius:20px;border:0.5px solid var(--border);background:var(--bg2);color:var(--text2);cursor:pointer;font-family:var(--font);transition:all .15s}
 .mood-btn:hover{border-color:var(--border2);color:var(--text)}
 .mood-btn.active{background:var(--text);color:var(--bg);border-color:var(--text)}
-
-/* Rec card */
 .rec-card{border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:1.25rem;border:2px solid var(--green);background:var(--green-bg)}
 .rec-card .rec-label{font-size:11px;font-weight:500;color:var(--green-text);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
 .rec-card .rec-title{font-size:15px;font-weight:500;margin-bottom:4px}
 .rec-card .rec-why{font-size:12px;color:var(--green-text);line-height:1.5;margin-bottom:10px}
-
-/* Workout cards */
 .workout-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:1.5rem}
 .workout-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1rem;cursor:pointer;transition:border-color .15s}
 .workout-card:hover{border-color:var(--border2)}
@@ -88,8 +80,6 @@ body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:
 .tag-kettlebell{background:var(--amber-bg);color:var(--amber-text)}
 .tag-15{background:var(--bg2);color:var(--text2)}
 .tag-30{background:var(--coral-bg);color:var(--coral-text)}
-
-/* Exercise detail */
 .workout-detail{background:var(--bg2);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1rem}
 .workout-detail h3{font-size:15px;font-weight:500;margin-bottom:1rem}
 .ex-item{border-bottom:0.5px solid var(--border)}
@@ -101,8 +91,6 @@ body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:
 .ex-tip{font-size:12px;color:var(--text2);line-height:1.6;padding:0 0 10px 0;display:none}
 .ex-tip.open{display:block}
 .ex-tip .tip-what{font-weight:500;color:var(--text);margin-bottom:3px}
-
-/* Progress */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
 .stat-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1rem;text-align:center}
 .stat-card .val{font-size:24px;font-weight:500}
@@ -126,8 +114,6 @@ body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:
 .log-entry .entry-meta{color:var(--text2);font-size:12px}
 .del-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:2px 5px}
 .del-btn:hover{color:var(--red)}
-
-/* Goal */
 .goal-banner{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .goal-banner .goal-label{font-size:12px;color:var(--text3);margin-bottom:2px}
 .goal-banner .goal-text{font-size:15px;font-weight:500}
@@ -138,10 +124,44 @@ body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:
 .goal-option h3{font-size:14px;font-weight:500;margin-bottom:4px}
 .goal-option p{font-size:12px;color:var(--text2);line-height:1.5}
 .goal-cat{font-size:11px;padding:2px 7px;border-radius:var(--radius);background:var(--bg2);color:var(--text2);border:0.5px solid var(--border);display:inline-block;margin-top:6px}
+
+/* PR / Baseline styles */
+.pr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:1.5rem}
+.pr-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1rem;position:relative}
+.pr-card h3{font-size:14px;font-weight:500;margin-bottom:8px;padding-right:60px}
+.pr-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:4px}
+.pr-row .label{color:var(--text3)}
+.pr-row .val{font-weight:500;color:var(--text)}
+.pr-row .delta{font-size:11px;padding:1px 6px;border-radius:var(--radius);background:var(--green-bg);color:var(--green-text)}
+.pr-row .delta.neg{background:var(--coral-bg);color:var(--coral-text)}
+.pr-edit-btn{position:absolute;top:10px;right:10px;background:none;border:0.5px solid var(--border);cursor:pointer;color:var(--text3);font-size:12px;padding:2px 8px;border-radius:4px;font-family:var(--font)}
+.pr-edit-btn:hover{color:var(--text);background:var(--bg2)}
+.pr-form{background:var(--bg2);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1.5rem}
+.pr-form h3{font-size:15px;font-weight:500;margin-bottom:1rem}
+.pr-exercise-select{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin-bottom:1rem;max-height:240px;overflow-y:auto}
+.pr-ex-option{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:7px 10px;font-size:12px;cursor:pointer;transition:border-color .15s}
+.pr-ex-option:hover{border-color:var(--blue)}
+.pr-ex-option.selected{border:2px solid var(--blue);background:var(--blue-bg);color:var(--blue-text)}
+.input-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group label{font-size:12px;color:var(--text2)}
+.form-group input,.form-group select{font-size:14px;padding:7px 10px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--font)}
+.form-group input:focus{outline:none;border-color:var(--blue)}
+
+/* Weight chart */
+.chart-wrap{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1.5rem}
+.chart-wrap h3{font-size:15px;font-weight:500;margin-bottom:1rem}
+.chart-area{width:100%;height:180px;position:relative}
+svg.weight-chart{width:100%;height:100%}
+.weigh-in-form{background:var(--bg2);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1.5rem;display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
+.weigh-in-form .form-group{flex:1;min-width:140px}
+.weigh-in-log{display:flex;flex-direction:column;gap:0}
+
 .empty-state{text-align:center;padding:3rem 1rem;color:var(--text3);font-size:14px}
 @media(max-width:600px){
   .stats-row{grid-template-columns:repeat(2,1fr)}
   .dot-grid{grid-template-columns:repeat(10,1fr)}
+  .input-row{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -159,6 +179,8 @@ body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:
   <div class="tabs">
     <button class="tab active" onclick="switchTab('today')">Today</button>
     <button class="tab" onclick="switchTab('progress')">Progress</button>
+    <button class="tab" onclick="switchTab('records')">Records</button>
+    <button class="tab" onclick="switchTab('weight')">Weight</button>
     <button class="tab" onclick="switchTab('library')">Library</button>
     <button class="tab" onclick="switchTab('goal')">Goal</button>
   </div>
@@ -174,30 +196,23 @@ body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:
       <span style="font-size:14px;color:var(--text3)">No goal set yet —</span>
       <button class="btn btn-sm btn-primary" onclick="switchTab('goal')">Pick a goal →</button>
     </div>
-
-    <!-- Mood -->
     <div class="mood-bar">
       <h3>How are you feeling today?</h3>
       <div class="mood-options">
-        <button class="mood-btn" data-mood="fired" onclick="setMood('fired',this)">🔥 Fired up</button>
-        <button class="mood-btn" data-mood="good" onclick="setMood('good',this)">💪 Feeling good</button>
-        <button class="mood-btn" data-mood="average" onclick="setMood('average',this)">😐 Average</button>
-        <button class="mood-btn" data-mood="low" onclick="setMood('low',this)">😴 Low energy</button>
-        <button class="mood-btn" data-mood="sore" onclick="setMood('sore',this)">🤕 Sore / stiff</button>
+        <button class="mood-btn" onclick="setMood('fired',this)">🔥 Fired up</button>
+        <button class="mood-btn" onclick="setMood('good',this)">💪 Feeling good</button>
+        <button class="mood-btn" onclick="setMood('average',this)">😐 Average</button>
+        <button class="mood-btn" onclick="setMood('low',this)">😴 Low energy</button>
+        <button class="mood-btn" onclick="setMood('sore',this)">🤕 Sore / stiff</button>
       </div>
     </div>
-
-    <!-- Rec -->
     <div id="rec-card" style="display:none" class="rec-card">
       <div class="rec-label">Recommended for you</div>
       <div class="rec-title" id="rec-title"></div>
       <div class="rec-why" id="rec-why"></div>
       <button class="btn btn-green btn-sm" onclick="selectRecommended()">Select this workout</button>
     </div>
-
-    <div class="section-header" style="margin-top:1rem">
-      <h2>Or browse all workouts</h2>
-    </div>
+    <div class="section-header" style="margin-top:.5rem"><h2>Browse workouts</h2></div>
     <div class="filters" id="today-filters">
       <button class="filter-btn active" onclick="todayFilter('all',this)">All</button>
       <button class="filter-btn" onclick="todayFilter('strength',this)">Strength</button>
@@ -240,6 +255,63 @@ body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:
     <div id="recent-log"></div>
   </div>
 
+  <!-- RECORDS -->
+  <div id="view-records" class="view">
+    <div class="section-header">
+      <h2>Personal records</h2>
+      <button class="btn btn-sm btn-primary" onclick="togglePRForm()">+ Log record</button>
+    </div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:1rem">Track your baseline and PRs for each exercise. See how far you've come.</p>
+
+    <div id="pr-form" style="display:none" class="pr-form">
+      <h3 id="pr-form-title">Log a record</h3>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:8px">Pick an exercise:</div>
+      <div class="pr-exercise-select" id="pr-exercise-select"></div>
+      <div style="font-size:12px;color:var(--text2);margin:10px 0 6px">Record type:</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <button class="filter-btn active" id="type-baseline" onclick="setPRType('baseline',this)">Baseline (Day 1)</button>
+        <button class="filter-btn" id="type-pr" onclick="setPRType('pr',this)">New PR</button>
+      </div>
+      <div class="input-row">
+        <div class="form-group"><label>Weight (lbs)</label><input type="number" id="pr-weight" placeholder="e.g. 25" min="0" step="2.5"></div>
+        <div class="form-group"><label>Reps</label><input type="number" id="pr-reps" placeholder="e.g. 12" min="1"></div>
+        <div class="form-group"><label>Sets</label><input type="number" id="pr-sets" placeholder="e.g. 3" min="1"></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" onclick="saveRecord()">Save record</button>
+        <button class="btn btn-sm" onclick="togglePRForm()">Cancel</button>
+      </div>
+    </div>
+
+    <div id="pr-cards"></div>
+  </div>
+
+  <!-- WEIGHT -->
+  <div id="view-weight" class="view">
+    <div class="section-header"><h2>Weight tracking</h2></div>
+    <div class="weigh-in-form">
+      <div class="form-group">
+        <label>Weight (lbs)</label>
+        <input type="number" id="wi-weight" placeholder="e.g. 185" step="0.1" min="50">
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="wi-date">
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="saveWeighIn()">Log weight</button>
+    </div>
+    <div class="chart-wrap" id="weight-chart-wrap" style="display:none">
+      <h3>Weight over time</h3>
+      <div class="chart-area"><svg id="weight-svg" class="weight-chart"></svg></div>
+      <div id="weight-stats" style="display:flex;gap:20px;flex-wrap:wrap;margin-top:1rem;font-size:13px"></div>
+    </div>
+    <div class="section-header" style="margin-top:.5rem">
+      <h2>Log history</h2>
+      <button class="btn btn-xs" onclick="if(confirm('Clear all weigh-ins?'))clearWeighIns()">Clear all</button>
+    </div>
+    <div id="wi-log"></div>
+  </div>
+
   <!-- LIBRARY -->
   <div id="view-library" class="view">
     <div class="section-header"><h2>Workout library</h2></div>
@@ -258,7 +330,7 @@ body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:
   <!-- GOAL -->
   <div id="view-goal" class="view">
     <div class="section-header"><h2>Pick your stretch goal</h2></div>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Your north star for the 90 days. Shows up on Today and Progress as a reminder. Change anytime.</p>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Your north star for the 90 days. Shows up on Today and Progress. Change anytime.</p>
     <div class="goal-grid" id="goal-grid"></div>
     <div id="goal-current" style="display:none;margin-top:1rem">
       <div style="font-size:13px;color:var(--text2);margin-bottom:6px">Current goal:</div>
@@ -274,121 +346,139 @@ const SUPABASE_KEY='sb_publishable_WeYWprBTVZahREoBRj4Qgg_5lS6AvYO';
 const H={'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY};
 
 const PHASE_INFO=[
-  {phase:1,cls:'p1',title:'Phase 1 — Foundation',desc:'Sessions 1–30. The goal is building the habit and fighting stiffness. Prioritize mobility 2x per week. Keep strength sessions light and controlled. KB swings are your best bang-for-buck. Rest days count — don\'t skip them.'},
-  {phase:2,cls:'p2',title:'Phase 2 — Build',desc:'Sessions 31–60. You\'ve got the habit. Now add load. KB complex circuits and Turkish get-ups unlock here — you\'ve earned them. Aim for 4 active sessions per week. Mobility becomes maintenance rather than the priority.'},
-  {phase:3,cls:'p3',title:'Phase 3 — Peak',desc:'Sessions 61–90. Full library available. Push harder. Test yourself once a week — max pushups, longest plank, KB swing endurance. The last week should feel like a victory lap.'}
+  {phase:1,cls:'p1',title:'Phase 1 — Foundation',desc:'Sessions 1–30. Build the habit and fight stiffness. Prioritize mobility 2x per week. Keep strength sessions light and controlled. KB swings are your best bang-for-buck. Rest days count.'},
+  {phase:2,cls:'p2',title:'Phase 2 — Build',desc:'Sessions 31–60. Habit is established — now add load. KB complexes and Turkish get-ups unlock here. Aim for 4 active sessions per week. Mobility shifts to maintenance.'},
+  {phase:3,cls:'p3',title:'Phase 3 — Peak',desc:'Sessions 61–90. Full library available. Push harder. Test yourself weekly — max pushups, longest plank, KB endurance. The last week is a victory lap.'}
 ];
 
 const WORKOUTS=[
   {id:'w1',name:'Morning mobility flow',focus:'mobility',mins:15,phase:[1,2,3],exercises:[
-    {name:"World's greatest stretch",sets:'5 reps each side',tip:{what:'Hip flexors, thoracic spine, hamstrings — basically everything stiff',how:'Start in a lunge, plant front foot, drop back knee. Rotate your torso toward your front leg and reach your arm up. Hold 2 sec, repeat.',watch:'Keep your back knee off the ground if you can. Don\'t rush it.'}},
-    {name:'Hip 90/90 rotations',sets:'10 reps',tip:{what:'Hip internal and external rotation — the stuff you lose from sitting',how:'Sit on the floor with both knees bent at 90° (one in front, one to the side). Rotate both hips together to switch which knee is in front.',watch:'Keep your butt on the floor the whole time. It\'ll feel tight — that\'s the point.'}},
-    {name:'Cat-cow',sets:'10 reps',tip:{what:'Spinal flexion and extension — wakes up your whole back',how:'On hands and knees. Arch your back up (cat), then let it sag down and look up (cow). Slow and controlled.',watch:'Breathe with the movement — exhale on cat, inhale on cow.'}},
-    {name:'Thoracic spine rotations',sets:'8 each side',tip:{what:'Mid-back rotation — the thing you lose from desk work',how:'Lie on your side, knees stacked at 90°. Put your hands together in front of you, then open the top arm back toward the floor. Follow it with your eyes.',watch:'Let your head rotate with your arm. Don\'t force range — let gravity do the work.'}},
-    {name:'Leg swings',sets:'15 each side',tip:{what:'Hip flexor and hamstring mobility, dynamic',how:'Stand on one leg holding a wall. Swing the other leg forward and back like a pendulum. Controlled chaos.',watch:'Keep your core tight. Don\'t let your lower back arch as the leg swings back.'}},
-    {name:'Shoulder circles',sets:'10 each way',tip:{what:'Shoulder mobility and warming up the rotator cuff',how:'Arms at your sides, make big slow circles forward 10 times, then reverse.',watch:'Go slow on the backward circles — most people are tight there.'}}
+    {name:"World's greatest stretch",sets:'5 reps each side',tip:{what:'Hip flexors, thoracic spine, hamstrings',how:'Lunge, plant front foot, drop back knee, rotate torso toward front leg and reach arm up. Hold 2 sec.',watch:"Keep your back knee off the ground. Don't rush it."}},
+    {name:'Hip 90/90 rotations',sets:'10 reps',tip:{what:'Hip internal and external rotation — what you lose from sitting',how:'Sit with both knees bent at 90°, one in front, one to the side. Rotate both hips to switch.',watch:'Keep your butt on the floor the whole time.'}},
+    {name:'Cat-cow',sets:'10 reps',tip:{what:'Full spinal flexion and extension — wakes up your back',how:'On hands and knees. Arch back up (cat), then sag and look up (cow). Slow.',watch:'Breathe with it — exhale on cat, inhale on cow.'}},
+    {name:'Thoracic spine rotations',sets:'8 each side',tip:{what:'Mid-back rotation — what you lose from desk work',how:'Lie on side, knees stacked at 90°. Open top arm back toward floor, follow with eyes.',watch:'Let gravity do the work. No forcing.'}},
+    {name:'Leg swings',sets:'15 each side',tip:{what:'Hip flexor and hamstring mobility, dynamic',how:'Stand on one leg, hold wall. Swing other leg forward and back like a pendulum.',watch:"Keep core tight. Don't let lower back arch as leg swings back."}},
+    {name:'Shoulder circles',sets:'10 each way',tip:{what:'Shoulder mobility and rotator cuff warmup',how:'Arms at sides, make big slow circles forward then reverse.',watch:'Go extra slow on the backward circles — most people are tight there.'}}
   ]},
   {id:'w2',name:'Dumbbell upper body',focus:'strength',mins:30,phase:[1,2,3],exercises:[
-    {name:'DB shoulder press',sets:'3×10',tip:{what:'Shoulders, upper traps, triceps',how:'Sit or stand. Dumbbells at ear height, palms forward. Press straight up until arms are fully extended. Lower controlled.',watch:'Don\'t arch your lower back to get the weight up. If you have to, the weight is too heavy.'}},
-    {name:'DB bent-over row',sets:'3×12',tip:{what:'Upper back, lats, rear delts — the stuff that fixes bad posture',how:'Hinge at the hips until your torso is about 45°. Let the dumbbells hang, then pull them up toward your hips, squeezing your shoulder blades together.',watch:'Don\'t use momentum. The squeeze at the top is what matters.'}},
-    {name:'DB chest press (floor)',sets:'3×12',tip:{what:'Chest, shoulders, triceps',how:'Lie on the floor, knees bent. Dumbbells at chest height, elbows at 45°. Press up, lower until elbows touch the floor.',watch:'The floor limits your range of motion — that\'s actually fine for beginners and easier on the shoulder.'}},
-    {name:'DB curls',sets:'3×15',tip:{what:'Biceps — the classic',how:'Stand with dumbbells at your sides. Curl both up keeping elbows pinned to your sides. Lower slowly.',watch:'The slow lower (eccentric) is where the real strength gains happen. Don\'t just drop the weight.'}},
-    {name:'DB tricep kickbacks',sets:'3×15',tip:{what:'Triceps — the back of the arm',how:'Hinge forward, upper arm parallel to the floor. Extend your forearm back until your arm is straight. Hold 1 sec.',watch:'Keep your upper arm perfectly still. Only your forearm moves.'}},
-    {name:'Pushups',sets:'3×max',tip:{what:'Chest, shoulders, triceps, core — the best bodyweight exercise',how:'Hands slightly wider than shoulder-width. Lower until your chest nearly touches the floor. Full lockout at the top.',watch:'Your body should be a straight line from head to heels. Don\'t let your hips sag.'}}
+    {name:'DB shoulder press',sets:'3×10',tip:{what:'Shoulders, upper traps, triceps',how:'DBs at ear height, palms forward. Press straight up, lower controlled.',watch:"Don't arch your lower back to get the weight up. If you have to, it's too heavy."}},
+    {name:'DB bent-over row',sets:'3×12',tip:{what:'Upper back, lats, rear delts — fixes bad posture',how:'Hinge at hips ~45°, let DBs hang, pull to hips squeezing shoulder blades.',watch:"Don't use momentum. The squeeze at the top is what matters."}},
+    {name:'DB chest press (floor)',sets:'3×12',tip:{what:'Chest, shoulders, triceps',how:'Lie on floor, knees bent. Press up, lower until elbows touch floor.',watch:"The floor limits range of motion — that's fine and easier on the shoulder."}},
+    {name:'DB curls',sets:'3×15',tip:{what:'Biceps',how:'Stand with DBs at sides. Curl both up, elbows pinned. Lower slowly.',watch:'The slow lower is where the strength gains happen.'}},
+    {name:'DB tricep kickbacks',sets:'3×15',tip:{what:'Triceps',how:'Hinge forward, upper arm parallel to floor. Extend forearm back until straight. Hold 1 sec.',watch:'Keep upper arm perfectly still. Only forearm moves.'}},
+    {name:'Pushups',sets:'3×max',tip:{what:'Chest, shoulders, triceps, core',how:'Hands slightly wider than shoulder-width. Lower until chest nearly touches floor. Full lockout.',watch:'Body is a straight line head to heels. No sagging hips.'}}
   ]},
   {id:'w3',name:'KB swings + core',focus:'kettlebell',mins:20,phase:[1,2,3],exercises:[
-    {name:'KB two-hand swings',sets:'4×15',tip:{what:'Posterior chain — glutes, hamstrings, lower back. The king of KB exercises.',how:'Feet shoulder-width, hinge at the hips (not squat), let the KB swing back between your legs, then drive your hips forward explosively. The power comes from the hip snap, not your arms.',watch:'This is a HIP HINGE, not a squat. Your chest should be up, back flat. If your lower back hurts, you\'re squatting it.'}},
-    {name:'KB deadlift',sets:'3×10',tip:{what:'Glutes, hamstrings, lower back — the fundamental hip hinge',how:'KB between feet, hinge at hips, grip the handle, drive heels into the floor and stand up tall. Lower with control.',watch:'Keep the KB close to your body. Your back should stay flat — no rounding.'}},
-    {name:'Plank hold',sets:'3×30 sec',tip:{what:'Core stability — the whole anterior chain',how:'Forearms on the floor, body straight. Squeeze your glutes and abs. Don\'t let your hips rise or sag.',watch:'30 seconds done right beats 2 minutes done sloppy. If your form breaks, stop and rest.'}},
-    {name:'Dead bug',sets:'3×8 each side',tip:{what:'Deep core stability — the stuff that actually protects your lower back',how:'Lie on your back, arms up, knees at 90°. Slowly lower one arm and the OPPOSITE leg toward the floor. Press your lower back into the floor the entire time.',watch:'The name tells you what you\'re trying NOT to look like. If your lower back lifts off the floor, your range is too big. Shrink it.'}},
-    {name:'KB sumo squat',sets:'3×12',tip:{what:'Glutes, inner thighs, quads',how:'Wide stance, toes out. Hold KB by the horns at chest height. Squat deep, keeping chest up and knees tracking over toes.',watch:'Wide stance lets you get lower than a regular squat. Use it.'}}
+    {name:'KB two-hand swings',sets:'4×15',tip:{what:'Posterior chain — glutes, hamstrings, lower back. King of KB exercises.',how:'Feet shoulder-width, hinge at hips, let KB swing back, drive hips forward explosively. Power from hip snap, not arms.',watch:"HIP HINGE not a squat. Chest up, back flat. If lower back hurts, you're squatting it."}},
+    {name:'KB deadlift',sets:'3×10',tip:{what:'Glutes, hamstrings, lower back',how:'KB between feet, hinge, grip, drive heels into floor and stand tall.',watch:'Keep KB close to body. Back stays flat.'}},
+    {name:'Plank hold',sets:'3×30 sec',tip:{what:'Core stability — the whole anterior chain',how:'Forearms on floor, body straight. Squeeze glutes and abs.',watch:'30 seconds right beats 2 minutes sloppy. If form breaks, stop.'}},
+    {name:'Dead bug',sets:'3×8 each side',tip:{what:'Deep core stability — protects your lower back',how:'Back flat, arms up, knees at 90°. Lower opposite arm and leg. Press lower back into floor the whole time.',watch:'If lower back lifts off the floor, your range is too big. Shrink it.'}},
+    {name:'KB sumo squat',sets:'3×12',tip:{what:'Glutes, inner thighs, quads',how:'Wide stance, toes out. Hold KB at chest. Squat deep, chest up.',watch:'Wide stance lets you get lower. Use it.'}}
   ]},
   {id:'w4',name:'Lower body & hips',focus:'strength',mins:30,phase:[1,2,3],exercises:[
-    {name:'Goblet squat (KB)',sets:'3×12',tip:{what:'Quads, glutes, core — the best squat for beginners',how:'Hold KB by the horns at chest height. Squat down between your knees, keeping the weight close. Stand up tall.',watch:'The KB counterbalance lets you sit much more upright than a regular squat. Use that to go deeper.'}},
-    {name:'DB Romanian deadlift',sets:'3×10',tip:{what:'Hamstrings and glutes — this is where most people are weakest',how:'Hold DBs in front of your thighs. Hinge at the hips keeping your back flat, letting the weights slide down your legs. Feel the stretch in your hamstrings, then drive back up.',watch:'This is not a squat. Your knees barely bend. The movement is all hip hinge.'}},
-    {name:'Reverse lunges',sets:'3×10 each',tip:{what:'Quads, glutes, balance',how:'Step backward into a lunge, lower your back knee toward the floor, push back to standing from your front foot.',watch:'Reverse lunges are easier on the knees than forward lunges — the right starting point.'}},
-    {name:'Glute bridge',sets:'3×15',tip:{what:'Glutes and hamstrings — most desk workers have forgotten their glutes exist',how:'Lie on your back, knees bent. Drive your hips up, squeeze your glutes hard at the top. Hold 1 sec.',watch:'Squeeze at the top. If you just bounce up and down without the squeeze you\'re wasting the exercise.'}},
-    {name:'Lateral band walk',sets:'3×15 each',tip:{what:'Glute medius — the hip stabilizer that prevents knee and back problems',how:'Band around ankles or just above knees. Slight squat position. Step sideways, maintaining tension in the band.',watch:'Keep your toes forward and maintain the squat position the whole time. Don\'t let the band snap your knees in.'}},
-    {name:'Calf raises',sets:'3×20',tip:{what:'Calves — often ignored, actually important for ankle stability and injury prevention',how:'Stand with feet hip-width. Rise up onto your toes slowly, lower slowly.',watch:'Slow down the lowering phase. That\'s where the work happens.'}}
+    {name:'Goblet squat (KB)',sets:'3×12',tip:{what:'Quads, glutes, core — best squat for beginners',how:'Hold KB by horns at chest. Squat down between your knees, chest up.',watch:'KB counterbalance lets you sit more upright and go deeper.'}},
+    {name:'DB Romanian deadlift',sets:'3×10',tip:{what:'Hamstrings and glutes — where most people are weakest',how:'Hold DBs in front of thighs. Hinge at hips, back flat, weights slide down legs. Feel hamstring stretch.',watch:"This is not a squat. Knees barely bend. All hip hinge."}},
+    {name:'Reverse lunges',sets:'3×10 each',tip:{what:'Quads, glutes, balance',how:'Step back, lower back knee toward floor, push up from front foot.',watch:'Easier on knees than forward lunges — right starting point.'}},
+    {name:'Glute bridge',sets:'3×15',tip:{what:'Glutes and hamstrings',how:'Lie on back, knees bent. Drive hips up, squeeze glutes hard at top. Hold 1 sec.',watch:"Squeeze at the top. Don't just bounce up and down."}},
+    {name:'Lateral band walk',sets:'3×15 each',tip:{what:'Glute medius — prevents knee and back problems',how:'Band around ankles. Slight squat. Step sideways maintaining band tension.',watch:"Keep toes forward, maintain squat position. Don't let band snap knees in."}},
+    {name:'Calf raises',sets:'3×20',tip:{what:'Calves — important for ankle stability',how:'Rise up onto toes slowly, lower slowly.',watch:'Slow down the lowering. That is the work.'}}
   ]},
   {id:'w5',name:'Quick full body',focus:'strength',mins:15,phase:[1,2,3],exercises:[
-    {name:'KB swings',sets:'3×10',tip:{what:'Posterior chain — see KB swings above',how:'Hip hinge, explosive hip snap, arms guide not lift.',watch:'It\'s a hip hinge, not a squat.'}},
-    {name:'Pushups',sets:'3×10',tip:{what:'Chest, shoulders, triceps, core',how:'Straight body, lower until chest nearly touches floor.',watch:'Hips level, not sagging or piking.'}},
-    {name:'DB rows',sets:'3×10',tip:{what:'Upper back and lats',how:'Hinge forward, pull DBs to your hips.',watch:'Squeeze shoulder blades together at the top.'}},
-    {name:'Reverse lunges',sets:'2×8 each',tip:{what:'Quads and glutes',how:'Step back, lower knee toward floor, push up.',watch:'Control the descent.'}},
+    {name:'KB swings',sets:'3×10',tip:{what:'Posterior chain',how:'Hip hinge, explosive hip snap.',watch:"Hip hinge, not squat."}},
+    {name:'Pushups',sets:'3×10',tip:{what:'Chest, shoulders, triceps, core',how:'Straight body, lower to floor.',watch:'No sagging hips.'}},
+    {name:'DB rows',sets:'3×10',tip:{what:'Upper back',how:'Hinge forward, pull DBs to hips.',watch:'Squeeze shoulder blades at top.'}},
+    {name:'Reverse lunges',sets:'2×8 each',tip:{what:'Quads and glutes',how:'Step back, lower knee, push up.',watch:'Control the descent.'}},
     {name:'Plank',sets:'2×20 sec',tip:{what:'Core stability',how:'Straight body, squeeze everything.',watch:'Quality over duration.'}}
   ]},
   {id:'w6',name:'Deep stretch & recovery',focus:'mobility',mins:15,phase:[1,2,3],exercises:[
-    {name:'Pigeon pose',sets:'90 sec each side',tip:{what:'Hip external rotators and glutes — the tightest things in most people\'s bodies',how:'From a lunge, slide your front shin across the floor so your front knee is behind your wrist. Sink your hips and fold forward.',watch:'If your hips don\'t reach the floor, put a folded blanket under the hip. Don\'t torque your knee.'}},
-    {name:'Couch stretch',sets:'60 sec each side',tip:{what:'Hip flexors and quads — undoes sitting damage',how:'Back knee on the floor, back foot up on a couch or wall. Front leg at 90°. Upright torso, squeeze your glutes.',watch:'The glute squeeze on the back leg is what makes this actually work. Don\'t just hang there.'}},
-    {name:'Chest opener on floor',sets:'2 min',tip:{what:'Pec minor and anterior shoulder — what gets tight from screens',how:'Lie on your back. Arms out to sides like a T, elbows bent at 90°. Let gravity pull your hands toward the floor.',watch:'Don\'t force it. Just breathe and let gravity do the work over 2 minutes.'}},
-    {name:'Hamstring stretch',sets:'60 sec each',tip:{what:'Hamstrings — tight hamstrings are the #1 source of low back pain',how:'Sit on the floor with one leg extended, the other bent in. Hinge forward from your hips toward the straight leg.',watch:'Hinge from your hips, not your waist. Keep your back as flat as you can.'}},
-    {name:'Spiderman stretch',sets:'5 each side',tip:{what:'Hip flexors, groin, thoracic spine',how:'Lunge with your front foot outside your hand. Drop your back knee. Open your chest by rotating toward your front leg.',watch:'This is meant to feel like a lot at once. That\'s normal.'}}
+    {name:'Pigeon pose',sets:'90 sec each side',tip:{what:'Hip external rotators and glutes — tightest thing in most people',how:'From lunge, slide front shin across floor so front knee is behind wrist. Sink hips, fold forward.',watch:"If hips don't reach floor, put a towel under the hip. Don't torque your knee."}},
+    {name:'Couch stretch',sets:'60 sec each side',tip:{what:'Hip flexors and quads — undoes sitting damage',how:'Back knee on floor, back foot up on couch. Front leg at 90°, upright torso, squeeze glutes.',watch:'Glute squeeze on the back leg is what makes this work.'}},
+    {name:'Chest opener on floor',sets:'2 min',tip:{what:'Pec minor and anterior shoulder — tight from screens',how:'Lie on back. Arms out to sides like a T, elbows bent at 90°. Let gravity pull hands toward floor.',watch:"Don't force it. Breathe and let gravity work."}},
+    {name:'Hamstring stretch',sets:'60 sec each',tip:{what:'Hamstrings — tight hammies are the #1 source of low back pain',how:'Sit, one leg extended, other bent. Hinge forward from hips toward straight leg.',watch:'Hinge from hips, not waist. Keep back as flat as you can.'}},
+    {name:'Spiderman stretch',sets:'5 each side',tip:{what:'Hip flexors, groin, thoracic spine',how:'Lunge with front foot outside hand. Drop back knee. Open chest rotating toward front leg.',watch:'Meant to feel like a lot. Normal.'}}
   ]},
   {id:'w7',name:'KB complex circuit',focus:'kettlebell',mins:30,phase:[2,3],exercises:[
-    {name:'KB clean & press',sets:'4×5 each',tip:{what:'Total body — legs load the clean, shoulders and triceps press',how:'Pull the KB up from the floor in one fluid arc, catch it in the "rack" position (forearm vertical, KB resting on forearm). From there, press overhead.',watch:'The clean should be smooth. If the KB is banging your wrist you\'re muscling it instead of using your hip drive.'}},
-    {name:'KB single-leg deadlift',sets:'3×8 each',tip:{what:'Hamstrings, glutes, balance — one of the best exercises you can do',how:'Hold KB in one hand, hinge forward on the opposite leg (like a see-saw), letting the KB hang straight down.',watch:'Keep your hips square to the floor. The hip of the lifted leg wants to rotate up — resist it.'}},
-    {name:'KB goblet squat',sets:'4×12',tip:{what:'Quads, glutes, core',how:'KB at chest, squat deep between your knees.',watch:'Elbows inside your knees at the bottom. Use that to push your knees out.'}},
-    {name:'KB renegade row',sets:'3×6 each',tip:{what:'Upper back, core anti-rotation — brutally effective',how:'In pushup position with hands on KB handles. Row one KB up while the other supports you. Alternate.',watch:'Don\'t let your hips rotate when you row. That\'s the whole point of the exercise.'}},
-    {name:'KB swings',sets:'4×20',tip:{what:'Posterior chain endurance',how:'Hip hinge, explosive snap.',watch:'By set 4 you\'ll be breathing hard. Good.'}}
+    {name:'KB clean & press',sets:'4×5 each',tip:{what:'Total body — legs load the clean, shoulders press',how:'Pull KB up in one fluid arc, catch in rack position (forearm vertical). Press overhead.',watch:"Clean should be smooth. If KB bangs your wrist you're muscling instead of using hip drive."}},
+    {name:'KB single-leg deadlift',sets:'3×8 each',tip:{what:'Hamstrings, glutes, balance — one of the best exercises you can do',how:'Hold KB in one hand, hinge forward on opposite leg like a see-saw.',watch:'Keep hips square to floor. The lifted hip wants to rotate up — resist it.'}},
+    {name:'KB goblet squat',sets:'4×12',tip:{what:'Quads, glutes, core',how:'KB at chest, squat deep between knees.',watch:'Elbows inside knees at bottom. Use that to push knees out.'}},
+    {name:'KB renegade row',sets:'3×6 each',tip:{what:'Upper back, core anti-rotation',how:'Pushup position with hands on KB handles. Row one KB while other supports you. Alternate.',watch:"Don't let hips rotate when you row. That's the whole exercise."}},
+    {name:'KB swings',sets:'4×20',tip:{what:'Posterior chain endurance',how:'Hip hinge, explosive snap.',watch:"By set 4 you'll be breathing hard. Good."}}
   ]},
   {id:'w8',name:'Core & stability',focus:'strength',mins:20,phase:[1,2,3],exercises:[
-    {name:'Dead bug',sets:'3×8 each',tip:{what:'Deep core — the stuff that actually protects your spine',how:'Back flat, arms up, knees at 90°. Lower opposite arm and leg slowly without letting your back lift.',watch:'If your lower back peels off the floor, your range is too big. Make the movement smaller.'}},
-    {name:'Bird dog',sets:'3×8 each',tip:{what:'Core stability, lower back, balance',how:'On hands and knees. Extend opposite arm and leg simultaneously, hold 2 sec, return.',watch:'Don\'t let your lower back arch or your hips rotate. Keep everything level.'}},
-    {name:'Side plank',sets:'3×30 sec each',tip:{what:'Lateral core — the obliques and QL that support your spine sideways',how:'On your side, forearm on the floor, hips up. Body straight.',watch:'Don\'t let your hips sag. If 30 sec is too hard, start with your knees down.'}},
-    {name:'Pallof press (band)',sets:'3×10 each',tip:{what:'Anti-rotation core — trains your core to resist twisting forces',how:'Band anchored at chest height. Stand sideways to the anchor. Hold band at your chest, press it straight out, hold 2 sec, return.',watch:'Resist the pull of the band wanting to rotate you. That resistance IS the exercise.'}},
-    {name:'Hollow body hold',sets:'3×20 sec',tip:{what:'Full anterior core — the foundation of almost all gymnastic and athletic movement',how:'Lie on back, press lower back into floor. Arms overhead, legs straight and lifted. Hold.',watch:'Lower back must stay pressed into the floor. If it\'s not, bend your knees or raise your legs higher.'}}
+    {name:'Dead bug',sets:'3×8 each',tip:{what:'Deep core — actually protects your spine',how:'Back flat, arms up, knees at 90°. Lower opposite arm and leg without lifting back.',watch:'If lower back peels off floor, range is too big.'}},
+    {name:'Bird dog',sets:'3×8 each',tip:{what:'Core stability, lower back, balance',how:'On hands and knees. Extend opposite arm and leg, hold 2 sec, return.',watch:"Don't let lower back arch or hips rotate."}},
+    {name:'Side plank',sets:'3×30 sec each',tip:{what:'Lateral core — obliques supporting your spine sideways',how:'On side, forearm on floor, hips up. Body straight.',watch:"Don't let hips sag. Start with knees down if needed."}},
+    {name:'Pallof press (band)',sets:'3×10 each',tip:{what:'Anti-rotation core',how:'Band at chest height. Stand sideways to anchor. Press band straight out, hold 2 sec, return.',watch:'Resist the pull wanting to rotate you. That resistance IS the exercise.'}},
+    {name:'Hollow body hold',sets:'3×20 sec',tip:{what:'Full anterior core',how:'Lie on back, press lower back into floor. Arms overhead, legs straight and lifted.',watch:'Lower back must stay pressed into floor.'}}
   ]},
   {id:'w9',name:'Shoulder & thoracic mobility',focus:'mobility',mins:15,phase:[1,2,3],exercises:[
-    {name:'Wall slides',sets:'3×10',tip:{what:'Shoulder mobility and rotator cuff — reverses the forward shoulder slump',how:'Stand with your back against a wall, arms in a goalpost shape. Slide arms up the wall overhead, keeping contact the whole time.',watch:'Keep your lower back flat against the wall. Most people arch it — that\'s cheating.'}},
-    {name:'Band pull-aparts',sets:'3×15',tip:{what:'Rear delts and upper back — the most underworked muscles in people who sit all day',how:'Hold a band in front of you at chest height, arms straight. Pull it apart horizontally until it touches your chest.',watch:'Squeeze your shoulder blades together at the end range. Keep arms straight throughout.'}},
-    {name:'Thread the needle',sets:'8 each side',tip:{what:'Thoracic rotation — getting rotation back in your mid-back',how:'On hands and knees. Take one arm and thread it under your body along the floor, letting your shoulder drop toward the floor.',watch:'The rotation comes from your mid-back. Your hips should stay relatively still.'}},
-    {name:'Doorway chest stretch',sets:'60 sec',tip:{what:'Pecs and anterior shoulder — tight from anything involving forward arm position',how:'Stand in a doorway, forearms on the frame, elbows at 90°. Step through until you feel the stretch across your chest.',watch:'Don\'t just lean in — hold the position and breathe for the full 60 sec.'}},
-    {name:'Prone Y-T-W',sets:'2×10 each',tip:{what:'Lower and mid traps, rear delts — the postural muscles that hold your shoulders back',how:'Lie face down. For Y: arms overhead in a Y shape, lift. For T: arms straight out to sides, lift. For W: elbows bent, pull them toward your sides and squeeze.',watch:'These are small movements. You\'re not trying to lift high — you\'re trying to feel the squeeze between your shoulder blades.'}}
+    {name:'Wall slides',sets:'3×10',tip:{what:'Shoulder mobility and rotator cuff — reverses forward shoulder slump',how:'Back against wall, arms in goalpost shape. Slide arms up overhead keeping contact.',watch:'Keep lower back flat against wall. Most people arch it.'}},
+    {name:'Band pull-aparts',sets:'3×15',tip:{what:'Rear delts and upper back — most underworked muscles in desk workers',how:'Band at chest height, arms straight. Pull it apart horizontally to chest.',watch:'Squeeze shoulder blades at end range. Keep arms straight.'}},
+    {name:'Thread the needle',sets:'8 each side',tip:{what:'Thoracic rotation — getting rotation back in mid-back',how:'On hands and knees. Thread one arm under body along floor, let shoulder drop.',watch:'Rotation comes from mid-back. Hips stay relatively still.'}},
+    {name:'Doorway chest stretch',sets:'60 sec',tip:{what:'Pecs and anterior shoulder',how:'Stand in doorway, forearms on frame, elbows at 90°. Step through until you feel stretch.',watch:'Hold and breathe for full 60 sec.'}},
+    {name:'Prone Y-T-W',sets:'2×10 each',tip:{what:'Lower and mid traps, rear delts — postural muscles that hold shoulders back',how:'Face down. Y: arms overhead, lift. T: arms straight out, lift. W: elbows bent, pull to sides.',watch:"Small movements. You're trying to feel the squeeze, not lift high."}}
   ]},
   {id:'w10',name:'Turkish get-up practice',focus:'kettlebell',mins:20,phase:[2,3],exercises:[
-    {name:'KB Turkish get-up',sets:'5 each side (slow)',tip:{what:'Everything. Shoulder stability, hip mobility, core, balance. The single best whole-body exercise.',how:'Start lying down with KB pressed up, one knee bent. Follow the progression: roll to elbow, push to hand, bridge up, sweep leg through, half-kneel, stand. Reverse to get back down.',watch:'GO SLOW. This is a skill, not a power exercise. If the bell wobbles, your shoulder stability needs work. Start light — much lighter than you think.'}},
-    {name:'KB windmill',sets:'3×5 each',tip:{what:'Obliques, hip mobility, shoulder stability',how:'KB locked out overhead. Push your hip out to the side of the KB, hinge sideways and reach your other hand down your leg.',watch:'Keep your eyes on the KB the whole time. The locked arm must stay vertical.'}},
-    {name:'KB halo',sets:'3×8 each way',tip:{what:'Shoulder mobility and core stability',how:'Hold KB by the horns upside-down at chest height. Circle it around your head slowly.',watch:'Keep your core tight and don\'t let your lower back arch. Slow circles.'}},
-    {name:'KB goblet squat hold',sets:'3×10',tip:{what:'Hip mobility, quad strength, thoracic extension',how:'Hold KB at chest, squat deep and PAUSE at the bottom for 2 sec each rep.',watch:'Use your elbows to push your knees out at the bottom. That\'s active hip mobility work.'}}
+    {name:'KB Turkish get-up',sets:'5 each side (slow)',tip:{what:'Everything. Shoulder stability, hip mobility, core, balance. The best whole-body exercise.',how:'Start lying down, KB pressed up. Roll to elbow, push to hand, bridge up, sweep leg through, half-kneel, stand. Reverse.',watch:'GO SLOW. This is a skill. Start much lighter than you think. Eyes on the bell always.'}},
+    {name:'KB windmill',sets:'3×5 each',tip:{what:'Obliques, hip mobility, shoulder stability',how:'KB locked out overhead. Push hip out to KB side, hinge sideways, reach other hand down leg.',watch:'Eyes on KB the whole time. Locked arm stays vertical.'}},
+    {name:'KB halo',sets:'3×8 each way',tip:{what:'Shoulder mobility and core stability',how:'Hold KB by horns upside-down at chest. Circle it around head slowly.',watch:"Keep core tight and don't arch lower back."}},
+    {name:'KB goblet squat hold',sets:'3×10',tip:{what:'Hip mobility, quad strength, thoracic extension',how:'Hold KB at chest, squat deep and PAUSE at bottom 2 sec each rep.',watch:'Use elbows to push knees out at bottom. Active hip mobility work.'}}
   ]},
   {id:'w11',name:'Full body DB circuit',focus:'strength',mins:30,phase:[2,3],exercises:[
-    {name:'DB squat to press',sets:'4×10',tip:{what:'Legs and shoulders combined — high demand, efficient',how:'DBs at shoulder height. Squat down, stand up, and press overhead in one fluid movement.',watch:'The press starts as you\'re coming up from the squat — use the momentum. Don\'t pause between squat and press.'}},
-    {name:'DB renegade row',sets:'3×8 each',tip:{what:'Upper back, core anti-rotation',how:'Pushup position, DBs as handles. Row one DB up while balancing on the other.',watch:'Hips stay square. The fight against rotation is the exercise.'}},
-    {name:'DB Romanian deadlift',sets:'3×12',tip:{what:'Hamstrings and glutes',how:'Hip hinge, flat back, DBs slide down the front of your thighs.',watch:'Feel the stretch in your hamstrings. That\'s the whole point.'}},
-    {name:'DB lateral raises',sets:'3×15',tip:{what:'Lateral deltoid — gives you the shoulder width that improves posture',how:'Arms at sides, slight bend in elbow. Raise arms out to the side to shoulder height.',watch:'Don\'t shrug. Lead with your elbows, not your hands.'}},
-    {name:'Pushup to T-rotation',sets:'3×8 each',tip:{what:'Chest, shoulders, core rotation',how:'Do a pushup, then at the top rotate open into a side plank with one arm raised, hold 1 sec.',watch:'The rotation is from your thoracic spine. Control it.'}},
-    {name:'DB curl to press',sets:'3×10',tip:{what:'Biceps and shoulders in one movement',how:'Curl DBs up to shoulder height, then press overhead.',watch:'Two distinct movements — don\'t rush them together.'}}
+    {name:'DB squat to press',sets:'4×10',tip:{what:'Legs and shoulders combined',how:'DBs at shoulder height. Squat down, stand up, press overhead in one movement.',watch:"Press starts as you're coming up from squat — use the momentum."}},
+    {name:'DB renegade row',sets:'3×8 each',tip:{what:'Upper back, core anti-rotation',how:'Pushup position on DBs. Row one DB while balancing on other.',watch:'Hips stay square. The fight against rotation is the exercise.'}},
+    {name:'DB Romanian deadlift',sets:'3×12',tip:{what:'Hamstrings and glutes',how:'Hip hinge, flat back, DBs slide down front of thighs.',watch:'Feel the stretch in hamstrings.'}},
+    {name:'DB lateral raises',sets:'3×15',tip:{what:'Lateral deltoid — shoulder width and posture',how:'Arms at sides, slight elbow bend. Raise out to shoulder height.',watch:"Don't shrug. Lead with elbows, not hands."}},
+    {name:'Pushup to T-rotation',sets:'3×8 each',tip:{what:'Chest, shoulders, core rotation',how:'Do a pushup, then at top rotate into side plank with arm raised, hold 1 sec.',watch:'Rotation is from thoracic spine. Control it.'}},
+    {name:'DB curl to press',sets:'3×10',tip:{what:'Biceps and shoulders',how:'Curl to shoulder height, then press overhead.',watch:"Two distinct movements — don't rush them together."}}
   ]},
   {id:'w12',name:'Mobility & breathwork',focus:'mobility',mins:15,phase:[1,2,3],exercises:[
-    {name:'Box breathing',sets:'3 min',tip:{what:'Nervous system regulation — lowers cortisol, improves focus and recovery',how:'Inhale for 4 counts, hold for 4, exhale for 4, hold for 4. Repeat.',watch:'This feels weird for the first 30 seconds. Stick with it. It works.'}},
-    {name:'Hip flexor stretch',sets:'90 sec each',tip:{what:'Hip flexors — the muscles that shorten from sitting and cause low back pain',how:'Lunge position, back knee on the floor. Tuck your pelvis under (posterior tilt) and shift forward.',watch:'The pelvic tuck is what makes this effective. Without it you\'re not actually stretching the hip flexor.'}},
-    {name:'Thoracic extension over foam roll',sets:'2 min',tip:{what:'Thoracic spine — undoes the forward rounding from screens',how:'Put a foam roll (or rolled towel) perpendicular to your spine. Lie back over it with arms crossed or behind head. Let gravity extend your spine.',watch:'Work the mid-back, not the lower back. Move it up and down your thoracic spine (between shoulder blades).'}},
-    {name:"Child's pose to cobra",sets:'10 reps',tip:{what:'Full spinal flexion and extension',how:'From child\'s pose (sitting back on your heels, arms forward), flow into cobra (hips on floor, arms press chest up). Slow rhythm.',watch:'In cobra, keep your glutes relaxed. The backbend should come from your thoracic spine, not just your lower back.'}},
-    {name:'Seated twist',sets:'8 each side',tip:{what:'Thoracic rotation and lumbar relief',how:'Sit cross-legged. Put one hand on the opposite knee and one behind you. Rotate and hold 3 sec.',watch:'Sit tall first, then rotate. Slouching kills the effectiveness.'}}
+    {name:'Box breathing',sets:'3 min',tip:{what:'Nervous system regulation — lowers cortisol, improves recovery',how:'Inhale 4 counts, hold 4, exhale 4, hold 4. Repeat.',watch:'Feels weird for 30 seconds. Stick with it.'}},
+    {name:'Hip flexor stretch',sets:'90 sec each',tip:{what:'Hip flexors — shortens from sitting, causes low back pain',how:'Lunge, back knee on floor. Tuck pelvis under and shift forward.',watch:'Pelvic tuck is what makes this effective.'}},
+    {name:'Thoracic extension over foam roll',sets:'2 min',tip:{what:'Thoracic spine — undoes forward rounding from screens',how:'Foam roll perpendicular to spine. Lie back over it. Let gravity extend your spine.',watch:'Work mid-back between shoulder blades, not lower back.'}},
+    {name:"Child's pose to cobra",sets:'10 reps',tip:{what:'Full spinal flexion and extension',how:"From child's pose flow into cobra. Slow rhythm.",watch:'In cobra, keep glutes relaxed. Extension from thoracic, not just lower back.'}},
+    {name:'Seated twist',sets:'8 each side',tip:{what:'Thoracic rotation and lumbar relief',how:'Sit cross-legged. Hand on opposite knee, one behind. Rotate and hold 3 sec.',watch:'Sit tall first, then rotate.'}}
   ]}
 ];
 
-const GOALS=[
-  {id:'g1',name:'50 consecutive pushups',desc:'Build upper body endurance from the ground up. A classic benchmark for functional strength.',cat:'Strength'},
-  {id:'g2',name:'10 pullups',desc:'The gold standard for relative strength. Get a bar and earn it.',cat:'Strength'},
-  {id:'g3',name:'KB Turkish get-up, 5 each side',desc:'The ultimate mobility + strength combo. If you can do this well, you can do almost anything.',cat:'Kettlebell'},
-  {id:'g4',name:'3-minute plank hold',desc:'Pure core endurance. Harder than it sounds, more useful than it looks.',cat:'Strength'},
-  {id:'g5',name:'20-min KB swing session',desc:'Cardiovascular endurance meets posterior chain strength. A serious aerobic test.',cat:'Kettlebell'},
-  {id:'g6',name:'Ride 10 miles on a bike',desc:"The redemption arc. Low-impact cardio that proves the bike doesn't always win.",cat:'Cardio 🚲'},
-  {id:'g7',name:'Touch your toes flat-footed',desc:"Sounds simple. For a stiff 36-year-old, it's a real achievement worth celebrating.",cat:'Mobility'},
-  {id:'g8',name:'Full deep squat, 60 sec hold',desc:"The human resting position we've trained ourselves out of. Get it back.",cat:'Mobility'},
-  {id:'g9',name:'Complete all 90 sessions',desc:'No physical test. Just show up, consistently, for 90 sessions. Consistency is the goal.',cat:'Completion'}
+// All trackable exercises (weighted/bodyweight)
+const TRACKABLE=[
+  {id:'e1',name:'Pushups',unit:'bodyweight'},
+  {id:'e2',name:'DB shoulder press',unit:'lbs'},
+  {id:'e3',name:'DB bent-over row',unit:'lbs'},
+  {id:'e4',name:'DB chest press (floor)',unit:'lbs'},
+  {id:'e5',name:'DB curls',unit:'lbs'},
+  {id:'e6',name:'Goblet squat (KB)',unit:'lbs'},
+  {id:'e7',name:'DB Romanian deadlift',unit:'lbs'},
+  {id:'e8',name:'KB two-hand swings',unit:'lbs'},
+  {id:'e9',name:'KB deadlift',unit:'lbs'},
+  {id:'e10',name:'Plank hold',unit:'seconds'},
+  {id:'e11',name:'Reverse lunges',unit:'lbs'},
+  {id:'e12',name:'Glute bridge',unit:'bodyweight'},
+  {id:'e13',name:'DB squat to press',unit:'lbs'},
+  {id:'e14',name:'KB clean & press',unit:'lbs'},
+  {id:'e15',name:'KB Turkish get-up',unit:'lbs'},
+  {id:'e16',name:'Full body DB circuit',unit:'lbs'},
+  {id:'e17',name:'Side plank',unit:'seconds'},
+  {id:'e18',name:'Hollow body hold',unit:'seconds'}
 ];
 
-let sessions=[];
-let selectedGoal=null;
-let selectedWorkout=null;
-let currentMood=null;
-let todayFilterVal='all';
-let currentRec=null;
+const GOALS=[
+  {id:'g1',name:'50 consecutive pushups',desc:'Build upper body endurance from the ground up.',cat:'Strength'},
+  {id:'g2',name:'10 pullups',desc:'The gold standard for relative strength. Get a bar and earn it.',cat:'Strength'},
+  {id:'g3',name:'KB Turkish get-up, 5 each side',desc:'The ultimate mobility + strength combo.',cat:'Kettlebell'},
+  {id:'g4',name:'3-minute plank hold',desc:'Pure core endurance. Harder than it sounds.',cat:'Strength'},
+  {id:'g5',name:'20-min KB swing session',desc:'Cardiovascular endurance meets posterior chain strength.',cat:'Kettlebell'},
+  {id:'g6',name:'Ride 10 miles on a bike',desc:"The redemption arc. Low-impact cardio.",cat:'Cardio 🚲'},
+  {id:'g7',name:'Touch your toes flat-footed',desc:"Sounds simple. For a stiff 36-year-old, it's real.",cat:'Mobility'},
+  {id:'g8',name:'Full deep squat, 60 sec hold',desc:"The human resting position we've trained out of.",cat:'Mobility'},
+  {id:'g9',name:'Complete all 90 sessions',desc:'No physical test. Just show up 90 times.',cat:'Completion'}
+];
 
-// Supabase
+let sessions=[],records=[],weighIns=[];
+let selectedGoal=null,selectedWorkout=null,currentMood=null,currentRec=null;
+let todayFilterVal='all',prType='baseline',selectedExerciseId=null;
+
 async function sbGet(t,p=''){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}${p}`,{headers:H});if(!r.ok)throw new Error(await r.text());return r.json();}
 async function sbInsert(t,d){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}`,{method:'POST',headers:{...H,'Prefer':'return=representation'},body:JSON.stringify(d)});if(!r.ok)throw new Error(await r.text());return r.json();}
 async function sbDelete(t,id){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}?id=eq.${encodeURIComponent(id)}`,{method:'DELETE',headers:H});if(!r.ok)throw new Error(await r.text());}
@@ -400,176 +490,118 @@ function setSyncStatus(s,msg){
 
 async function loadData(){
   setSyncStatus('loading','Loading...');
-  try{sessions=await sbGet('workout_sessions','?order=logged_at.desc');setSyncStatus('ok','Synced');}
-  catch(e){setSyncStatus('err','Offline');sessions=[];}
+  try{
+    const[s,r,w]=await Promise.all([
+      sbGet('workout_sessions','?order=logged_at.desc'),
+      sbGet('exercise_records','?order=logged_at.asc'),
+      sbGet('weigh_ins','?order=logged_at.asc')
+    ]);
+    sessions=s;records=r;weighIns=w;
+    setSyncStatus('ok','Synced');
+  }catch(e){setSyncStatus('err','Offline');sessions=[];records=[];weighIns=[];}
   try{const s=localStorage.getItem('workout-goal-v1');if(s)selectedGoal=JSON.parse(s);}catch(_){}
+  // Set today's date in weigh-in form
+  document.getElementById('wi-date').value=todayStr();
   render();
 }
 
+function todayStr(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+
 function switchTab(t){
-  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['today','progress','library','goal'][i]===t));
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['today','progress','records','weight','library','goal'][i]===t));
   document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
   document.getElementById('view-'+t).classList.add('active');
   if(t==='progress')renderProgress();
+  if(t==='records')renderRecords();
+  if(t==='weight')renderWeight();
   if(t==='library')renderLibrary('all');
   if(t==='goal')renderGoal();
 }
 
 function getCurrentPhase(){const n=sessions.length;return n<30?1:n<60?2:3;}
 
-/* ---- RECOMMENDATION ENGINE ---- */
+/* ---- REC ENGINE ---- */
 function computeRec(){
   const phase=getCurrentPhase();
   const available=WORKOUTS.filter(w=>w.phase.includes(phase));
+  const recent=sessions.slice(0,5).map(s=>s.focus);
+  const last=recent[0]||null;
+  const last2Same=recent.length>=2&&recent[0]===recent[1];
+  const noMobility=recent.filter(f=>f==='mobility').length===0&&sessions.length>=3;
+  const noKB=recent.filter(f=>f==='kettlebell').length===0&&sessions.length>=4;
 
-  // Analyze recent history
-  const recent=sessions.slice(0,5);
-  const recentFocus=recent.map(s=>s.focus);
-  const strengthCount=recentFocus.filter(f=>f==='strength').length;
-  const mobilityCount=recentFocus.filter(f=>f==='mobility').length;
-  const kbCount=recentFocus.filter(f=>f==='kettlebell').length;
-  const lastFocus=recentFocus[0]||null;
-  const last2Same=recentFocus.length>=2&&recentFocus[0]===recentFocus[1];
-
-  // Mood overrides first
-  if(currentMood==='sore'){
-    const w=available.find(w=>w.id==='w6')||available.find(w=>w.focus==='mobility'&&w.mins<=15);
-    return{workout:w,why:'You\'re sore — today is a recovery day. This will help more than pushing through.'};
-  }
-  if(currentMood==='low'){
-    const w=available.find(w=>w.focus==='mobility'&&w.mins<=15)||available.find(w=>w.mins<=15);
-    return{workout:w,why:'Low energy days are for mobility work. 15 minutes, nothing heroic. You\'ll feel better after.'};
-  }
-  if(currentMood==='fired'){
-    const w=available.find(w=>w.id==='w7')||available.find(w=>w.focus==='kettlebell'&&w.mins>=20)||available.find(w=>w.mins>=30);
-    return{workout:w,why:"You're fired up — use it. This is a high-output session."};
-  }
-
-  // Pattern-based logic
-  if(last2Same&&lastFocus==='strength'){
-    const w=available.find(w=>w.focus==='mobility');
-    return{workout:w,why:'You\'ve done strength two sessions in a row. Your body needs the mobility work — and it\'ll make your next strength session better.'};
-  }
-  if(mobilityCount===0&&sessions.length>=3){
-    const w=available.find(w=>w.focus==='mobility');
-    return{workout:w,why:"You haven't done any mobility work recently. Given your stiffness goals, this should be a priority."};
-  }
-  if(kbCount===0&&sessions.length>=4&&phase>=1){
-    const w=available.find(w=>w.focus==='kettlebell');
-    return{workout:w,why:"You haven't done any KB work in a while. Swings are your best single exercise for strength and mobility combined."};
-  }
-  if(lastFocus==='mobility'){
-    const w=available.find(w=>w.focus==='strength'&&w.mins<=30)||available.find(w=>w.focus==='strength');
-    return{workout:w,why:'You did mobility last time. Now build some strength on top of that looseness.'};
-  }
-  if(currentMood==='average'){
-    const w=available.find(w=>w.id==='w8')||available.find(w=>w.mins<=20);
-    return{workout:w,why:'Average day — a solid 20-min core session. Not too taxing, still meaningful work.'};
-  }
-
-  // Default: balanced choice for phase
-  if(phase===1){
-    const w=available.find(w=>w.id==='w3')||available.find(w=>w.focus==='kettlebell');
-    return{workout:w,why:'In Phase 1, KB swings are your best investment. They build strength and mobility simultaneously.'};
-  }
+  if(currentMood==='sore'){const w=available.find(w=>w.id==='w6')||available.find(w=>w.focus==='mobility'&&w.mins<=15);return{workout:w,why:"You're sore — recovery day. This will help more than pushing through."};}
+  if(currentMood==='low'){const w=available.find(w=>w.focus==='mobility'&&w.mins<=15)||available.find(w=>w.mins<=15);return{workout:w,why:"Low energy = mobility day. 15 minutes, nothing heroic. You'll feel better after."};}
+  if(currentMood==='fired'){const w=available.find(w=>w.id==='w7')||available.find(w=>w.focus==='kettlebell'&&w.mins>=20)||available.find(w=>w.mins>=30);return{workout:w,why:"You're fired up — use it. High-output session."};}
+  if(last2Same&&last==='strength'){const w=available.find(w=>w.focus==='mobility');return{workout:w,why:"Two strength sessions in a row. Your body needs mobility work — and it'll make your next strength session better."};}
+  if(noMobility){const w=available.find(w=>w.focus==='mobility');return{workout:w,why:"No mobility work recently. Given your stiffness goals, this should be a priority."};}
+  if(noKB){const w=available.find(w=>w.focus==='kettlebell');return{workout:w,why:"No KB work in a while. Swings are your best single exercise for strength and mobility combined."};}
+  if(last==='mobility'){const w=available.find(w=>w.focus==='strength'&&w.mins<=30)||available.find(w=>w.focus==='strength');return{workout:w,why:"You did mobility last time. Build some strength on top of that looseness."};}
+  if(currentMood==='average'){const w=available.find(w=>w.id==='w8')||available.find(w=>w.mins<=20);return{workout:w,why:"Average day — solid 20-min core session. Not too taxing, still meaningful."};}
+  if(phase===1){const w=available.find(w=>w.id==='w3')||available.find(w=>w.focus==='kettlebell');return{workout:w,why:"In Phase 1, KB swings are your best investment. Strength and mobility at once."};}
   const w=available.find(w=>w.focus==='strength'&&w.mins===30)||available[0];
-  return{workout:w,why:'A solid balanced session for where you are in the program.'};
+  return{workout:w,why:"A solid balanced session for where you are in the program."};
 }
-
 function renderRec(){
-  const rec=computeRec();
-  currentRec=rec;
+  const rec=computeRec();currentRec=rec;
   const card=document.getElementById('rec-card');
   if(!rec||!rec.workout){card.style.display='none';return;}
   document.getElementById('rec-title').textContent=rec.workout.name+` — ${rec.workout.mins} min`;
   document.getElementById('rec-why').textContent=rec.why;
   card.style.display='block';
 }
-
-function selectRecommended(){
-  if(!currentRec||!currentRec.workout)return;
-  selectWorkout(currentRec.workout.id);
-  document.getElementById('today-grid').scrollIntoView({behavior:'smooth',block:'start'});
-}
+function selectRecommended(){if(!currentRec||!currentRec.workout)return;selectWorkout(currentRec.workout.id);document.getElementById('today-grid').scrollIntoView({behavior:'smooth',block:'start'});}
 
 /* ---- MOOD ---- */
-function setMood(mood,btn){
-  currentMood=mood;
-  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderRec();
-}
+function setMood(mood,btn){currentMood=mood;document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderRec();}
 
 /* ---- TODAY ---- */
-function todayFilter(f,btn){
-  todayFilterVal=f;
-  document.querySelectorAll('#today-filters .filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  selectedWorkout=null;
-  document.getElementById('selected-detail').style.display='none';
-  renderTodayGrid();
-}
+function todayFilter(f,btn){todayFilterVal=f;document.querySelectorAll('#today-filters .filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectedWorkout=null;document.getElementById('selected-detail').style.display='none';renderTodayGrid();}
 function renderTodayGrid(){
-  const phase=getCurrentPhase();
-  let ws=WORKOUTS.filter(w=>w.phase.includes(phase));
+  const phase=getCurrentPhase();let ws=WORKOUTS.filter(w=>w.phase.includes(phase));
   if(todayFilterVal==='15')ws=ws.filter(w=>w.mins<=15);
   else if(todayFilterVal==='30')ws=ws.filter(w=>w.mins>15);
   else if(todayFilterVal!=='all')ws=ws.filter(w=>w.focus===todayFilterVal);
   document.getElementById('today-grid').innerHTML=ws.map(w=>`
     <div class="workout-card${selectedWorkout&&selectedWorkout.id===w.id?' selected':''}${currentRec&&currentRec.workout&&currentRec.workout.id===w.id&&!(selectedWorkout&&selectedWorkout.id===w.id)?' recommended':''}" onclick="selectWorkout('${w.id}')">
-      <h3>${w.name}</h3>
-      <div class="meta">${w.mins} min · ${w.exercises.length} exercises</div>
-      <span class="tag tag-${w.focus}">${w.focus}</span>
-      <span class="tag tag-${w.mins<=15?'15':'30'}">${w.mins} min</span>
+      <h3>${w.name}</h3><div class="meta">${w.mins} min · ${w.exercises.length} exercises</div>
+      <span class="tag tag-${w.focus}">${w.focus}</span><span class="tag tag-${w.mins<=15?'15':'30'}">${w.mins} min</span>
     </div>`).join('');
 }
-function selectWorkout(id){
-  selectedWorkout=WORKOUTS.find(w=>w.id===id)||null;
-  renderTodayGrid();
-  const det=document.getElementById('selected-detail');
-  if(!selectedWorkout){det.style.display='none';return;}
-  const exRows=selectedWorkout.exercises.map((e,i)=>`
+function buildExRows(exercises,prefix){
+  return exercises.map((e,i)=>`
     <div class="ex-item">
-      <div class="ex-header" onclick="toggleTip('tip-${id}-${i}')">
+      <div class="ex-header" onclick="toggleTip('${prefix}-${i}')">
         <span class="ex-name">${e.name}</span>
-        <span style="display:flex;align-items:center;gap:8px">
-          <span class="ex-sets">${e.sets}</span>
-          <span class="ex-toggle">▸ how-to</span>
-        </span>
+        <span style="display:flex;align-items:center;gap:8px"><span class="ex-sets">${e.sets}</span><span class="ex-toggle">▸ how-to</span></span>
       </div>
-      <div class="ex-tip" id="tip-${id}-${i}">
+      <div class="ex-tip" id="${prefix}-${i}">
         <div class="tip-what">Works: ${e.tip.what}</div>
         <div style="margin-top:4px"><strong>How:</strong> ${e.tip.how}</div>
         <div style="margin-top:4px;color:var(--amber-text)"><strong>Watch out:</strong> ${e.tip.watch}</div>
       </div>
     </div>`).join('');
-  det.innerHTML=`<div class="workout-detail">
-    <h3>${selectedWorkout.name} — ${selectedWorkout.mins} min</h3>
-    ${exRows}
+}
+function selectWorkout(id){
+  selectedWorkout=WORKOUTS.find(w=>w.id===id)||null;renderTodayGrid();
+  const det=document.getElementById('selected-detail');
+  if(!selectedWorkout){det.style.display='none';return;}
+  det.innerHTML=`<div class="workout-detail"><h3>${selectedWorkout.name} — ${selectedWorkout.mins} min</h3>
+    ${buildExRows(selectedWorkout.exercises,'td-'+id)}
     <div style="margin-top:1rem;display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn btn-green" onclick="logWorkout()">Log this workout ✓</button>
       <button class="btn btn-sm" onclick="selectedWorkout=null;document.getElementById('selected-detail').style.display='none';renderTodayGrid()">Cancel</button>
     </div>
   </div>`;
-  det.style.display='block';
-  det.scrollIntoView({behavior:'smooth',block:'start'});
+  det.style.display='block';det.scrollIntoView({behavior:'smooth',block:'start'});
 }
-function toggleTip(id){
-  const el=document.getElementById(id);
-  if(el)el.classList.toggle('open');
-}
+function toggleTip(id){const el=document.getElementById(id);if(el)el.classList.toggle('open');}
 async function logWorkout(){
   if(!selectedWorkout)return;
   const s={id:'s'+Date.now(),workout_id:selectedWorkout.id,workout_name:selectedWorkout.name,focus:selectedWorkout.focus,duration_mins:selectedWorkout.mins,phase:getCurrentPhase(),session_type:'workout'};
   setSyncStatus('loading','Saving...');
-  try{
-    await sbInsert('workout_sessions',s);
-    sessions.unshift(s);setSyncStatus('ok','Logged!');
-    selectedWorkout=null;currentMood=null;
-    document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));
-    document.getElementById('selected-detail').style.display='none';
-    renderTodayGrid();renderRec();switchTab('progress');
-  }catch(e){setSyncStatus('err','Log failed');}
+  try{await sbInsert('workout_sessions',s);sessions.unshift(s);setSyncStatus('ok','Logged!');selectedWorkout=null;currentMood=null;document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));document.getElementById('selected-detail').style.display='none';renderTodayGrid();renderRec();switchTab('progress');}
+  catch(e){setSyncStatus('err','Log failed');}
 }
 async function logRest(){
   const s={id:'s'+Date.now(),workout_id:'rest',workout_name:'Rest / recovery day',focus:'rest',duration_mins:0,phase:getCurrentPhase(),session_type:'rest'};
@@ -581,8 +613,7 @@ async function logRest(){
 /* ---- PROGRESS ---- */
 function renderProgress(){
   const total=sessions.length,workouts=sessions.filter(s=>s.session_type==='workout').length;
-  const pct=Math.min(Math.round((total/90)*100),100);
-  const phase=getCurrentPhase();
+  const pct=Math.min(Math.round((total/90)*100),100),phase=getCurrentPhase();
   document.getElementById('stats-row').innerHTML=`
     <div class="stat-card"><div class="val">${total}</div><div class="lbl">Sessions</div></div>
     <div class="stat-card"><div class="val">${workouts}</div><div class="lbl">Workouts</div></div>
@@ -592,69 +623,177 @@ function renderProgress(){
   document.getElementById('prog-label').textContent=`${total} of 90 sessions · Phase ${phase}: ${['','Foundation','Build','Peak'][phase]}`;
   [1,2,3].forEach(p=>document.getElementById('phase-b'+p).classList.toggle('active-phase',p===phase));
   const gb=document.getElementById('goal-banner-progress');
-  if(selectedGoal){gb.style.display='flex';document.getElementById('goal-text-progress').textContent=selectedGoal.name;}
-  else gb.style.display='none';
+  if(selectedGoal){gb.style.display='flex';document.getElementById('goal-text-progress').textContent=selectedGoal.name;}else gb.style.display='none';
   [1,2,3].forEach(p=>{
     const start=(p-1)*30,c=document.getElementById('dots-'+p);c.innerHTML='';
-    for(let i=0;i<30;i++){
-      const d=document.createElement('div');d.className='dot';
-      if(start+i<total){const s=sessions[total-1-(start+i)];d.className='dot '+(s&&s.session_type==='rest'?'rest':'done');}
-      c.appendChild(d);
-    }
+    for(let i=0;i<30;i++){const d=document.createElement('div');d.className='dot';if(start+i<total){const s=sessions[total-1-(start+i)];d.className='dot '+(s&&s.session_type==='rest'?'rest':'done');}c.appendChild(d);}
   });
   const log=document.getElementById('recent-log');
   if(!sessions.length){log.innerHTML='<div class="empty-state">No sessions yet — start today!</div>';return;}
   log.innerHTML=sessions.slice(0,12).map(s=>{
     const dt=new Date(s.logged_at).toLocaleDateString('en-US',{month:'short',day:'numeric'});
-    return `<div class="log-entry">
-      <div><div class="entry-name">${s.workout_name}</div><div class="entry-meta">${dt}${s.duration_mins?' · '+s.duration_mins+' min':''} · Phase ${s.phase||1}</div></div>
-      <button class="del-btn" onclick="deleteSession('${s.id}')">×</button>
-    </div>`;
+    return `<div class="log-entry"><div><div class="entry-name">${s.workout_name}</div><div class="entry-meta">${dt}${s.duration_mins?' · '+s.duration_mins+' min':''} · Phase ${s.phase||1}</div></div><button class="del-btn" onclick="deleteSession('${s.id}')">×</button></div>`;
   }).join('');
 }
-async function deleteSession(id){
-  if(!confirm('Remove this session?'))return;
-  try{await sbDelete('workout_sessions',id);sessions=sessions.filter(s=>s.id!==id);renderProgress();setSyncStatus('ok','Removed');}
-  catch(e){setSyncStatus('err','Delete failed');}
+async function deleteSession(id){if(!confirm('Remove this session?'))return;try{await sbDelete('workout_sessions',id);sessions=sessions.filter(s=>s.id!==id);renderProgress();setSyncStatus('ok','Removed');}catch(e){setSyncStatus('err','Delete failed');}}
+async function resetProgress(){setSyncStatus('loading','Resetting...');try{for(const s of [...sessions])await sbDelete('workout_sessions',s.id);sessions=[];renderProgress();setSyncStatus('ok','Reset');}catch(e){setSyncStatus('err','Reset failed');}}
+
+/* ---- RECORDS ---- */
+function togglePRForm(){
+  const f=document.getElementById('pr-form');
+  const show=f.style.display==='none';
+  f.style.display=show?'block':'none';
+  if(show){renderPRExerciseSelect();selectedExerciseId=null;['pr-weight','pr-reps','pr-sets'].forEach(id=>document.getElementById(id).value='');}
 }
-async function resetProgress(){
-  setSyncStatus('loading','Resetting...');
-  try{for(const s of [...sessions])await sbDelete('workout_sessions',s.id);sessions=[];renderProgress();setSyncStatus('ok','Reset');}
-  catch(e){setSyncStatus('err','Reset failed');}
+function renderPRExerciseSelect(){
+  document.getElementById('pr-exercise-select').innerHTML=TRACKABLE.map(e=>`
+    <div class="pr-ex-option${selectedExerciseId===e.id?' selected':''}" onclick="selectPRExercise('${e.id}')">
+      ${e.name}<div style="font-size:10px;color:var(--text3);margin-top:2px">${e.unit}</div>
+    </div>`).join('');
+}
+function selectPRExercise(id){selectedExerciseId=id;renderPRExerciseSelect();}
+function setPRType(type,btn){prType=type;document.querySelectorAll('#pr-form .filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+async function saveRecord(){
+  if(!selectedExerciseId)return alert('Pick an exercise first.');
+  const ex=TRACKABLE.find(e=>e.id===selectedExerciseId);
+  const rec={
+    id:'r'+Date.now(),
+    exercise_name:ex.name,
+    exercise_id:selectedExerciseId,
+    weight_lbs:parseFloat(document.getElementById('pr-weight').value)||null,
+    reps:parseInt(document.getElementById('pr-reps').value)||null,
+    sets:parseInt(document.getElementById('pr-sets').value)||null,
+    record_type:prType,
+    notes:''
+  };
+  setSyncStatus('loading','Saving...');
+  try{
+    await sbInsert('exercise_records',rec);
+    records.push(rec);setSyncStatus('ok','Saved');
+    togglePRForm();renderRecords();
+  }catch(e){setSyncStatus('err','Save failed');}
+}
+function renderRecords(){
+  const container=document.getElementById('pr-cards');
+  // Group records by exercise
+  const byEx={};
+  records.forEach(r=>{
+    if(!byEx[r.exercise_name])byEx[r.exercise_name]={baseline:null,prs:[]};
+    if(r.record_type==='baseline')byEx[r.exercise_name].baseline=r;
+    else byEx[r.exercise_name].prs.push(r);
+  });
+  if(!Object.keys(byEx).length){container.innerHTML='<div class="empty-state">No records yet. Log your baselines to get started — they\'ll show you how far you\'ve come.</div>';return;}
+  container.innerHTML='<div class="pr-grid">'+Object.entries(byEx).map(([name,data])=>{
+    const baseline=data.baseline;
+    const latestPR=data.prs.sort((a,b)=>new Date(b.logged_at)-new Date(a.logged_at))[0];
+    const current=latestPR||baseline;
+    function fmtRecord(r){if(!r)return'—';const parts=[];if(r.weight_lbs)parts.push(r.weight_lbs+'lbs');if(r.sets&&r.reps)parts.push(`${r.sets}×${r.reps}`);else if(r.reps)parts.push(r.reps+' reps');return parts.join(' · ')||'Logged';}
+    // Compute delta
+    let deltaHTML='';
+    if(baseline&&latestPR){
+      const bScore=(baseline.weight_lbs||0)+(baseline.reps||0);
+      const pScore=(latestPR.weight_lbs||0)+(latestPR.reps||0);
+      if(pScore>bScore)deltaHTML=`<span class="delta">↑ PR</span>`;
+    }
+    return `<div class="pr-card">
+      <button class="pr-edit-btn" onclick="quickLogPR('${name}')">+ PR</button>
+      <h3>${name}</h3>
+      <div class="pr-row"><span class="label">Baseline</span><span class="val">${fmtRecord(baseline)}</span></div>
+      <div class="pr-row"><span class="label">Current best</span><span class="val">${fmtRecord(current)} ${deltaHTML}</span></div>
+      ${data.prs.length>1?`<div style="font-size:11px;color:var(--text3);margin-top:6px">${data.prs.length} PRs logged</div>`:''}
+    </div>`;
+  }).join('')+'</div>';
+}
+function quickLogPR(exerciseName){
+  const ex=TRACKABLE.find(e=>e.name===exerciseName);
+  if(!ex)return;
+  togglePRForm();
+  // Pre-select exercise
+  selectedExerciseId=ex.id;renderPRExerciseSelect();
+  // Set to PR type
+  prType='pr';
+  document.querySelectorAll('#pr-form .filter-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('type-pr').classList.add('active');
+  document.getElementById('pr-form').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ---- WEIGHT ---- */
+async function saveWeighIn(){
+  const wt=parseFloat(document.getElementById('wi-weight').value);
+  const dt=document.getElementById('wi-date').value||todayStr();
+  if(!wt||wt<50||wt>500)return alert('Enter a valid weight.');
+  const entry={id:'w'+Date.now(),weight_lbs:wt,logged_at:dt+'T12:00:00'};
+  setSyncStatus('loading','Saving...');
+  try{
+    await sbInsert('weigh_ins',entry);
+    weighIns.push(entry);weighIns.sort((a,b)=>new Date(a.logged_at)-new Date(b.logged_at));
+    setSyncStatus('ok','Saved');document.getElementById('wi-weight').value='';
+    renderWeight();
+  }catch(e){setSyncStatus('err','Save failed');}
+}
+async function clearWeighIns(){
+  if(!confirm('Clear all weigh-ins?'))return;
+  setSyncStatus('loading','Clearing...');
+  try{for(const w of [...weighIns])await sbDelete('weigh_ins',w.id);weighIns=[];renderWeight();setSyncStatus('ok','Cleared');}
+  catch(e){setSyncStatus('err','Failed');}
+}
+function renderWeight(){
+  const wrap=document.getElementById('weight-chart-wrap');
+  const logEl=document.getElementById('wi-log');
+  if(!weighIns.length){wrap.style.display='none';logEl.innerHTML='<div class="empty-state">No weigh-ins yet. Log your first one above.</div>';return;}
+  wrap.style.display='block';
+  // Draw SVG chart
+  const vals=weighIns.map(w=>w.weight_lbs);
+  const minW=Math.min(...vals)-2,maxW=Math.max(...vals)+2;
+  const W=800,H=160,pad={t:10,r:20,b:30,l:45};
+  const cw=W-pad.l-pad.r,ch=H-pad.t-pad.b;
+  const xScale=i=>pad.l+(i/(Math.max(weighIns.length-1,1)))*cw;
+  const yScale=v=>pad.t+ch-(((v-minW)/(maxW-minW))*ch);
+  const points=weighIns.map((w,i)=>`${xScale(i)},${yScale(w.weight_lbs)}`).join(' ');
+  // Y axis labels
+  const yLabels=[minW,minW+(maxW-minW)/2,maxW].map(v=>`<text x="${pad.l-6}" y="${yScale(v)+4}" text-anchor="end" font-size="11" fill="var(--text3)">${Math.round(v)}</text>`).join('');
+  // X axis labels (first, last, middle)
+  const xLabels=[0,Math.floor(weighIns.length/2),weighIns.length-1].filter((v,i,a)=>a.indexOf(v)===i&&v<weighIns.length).map(i=>{
+    const d=new Date(weighIns[i].logged_at);
+    return `<text x="${xScale(i)}" y="${H-8}" text-anchor="middle" font-size="11" fill="var(--text3)">${d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</text>`;
+  }).join('');
+  document.getElementById('weight-svg').innerHTML=`
+    <polyline points="${points}" fill="none" stroke="var(--green)" stroke-width="2" stroke-linejoin="round"/>
+    ${weighIns.map((w,i)=>`<circle cx="${xScale(i)}" cy="${yScale(w.weight_lbs)}" r="3.5" fill="var(--green)"/>`).join('')}
+    ${yLabels}${xLabels}
+    <line x1="${pad.l}" y1="${pad.t}" x2="${pad.l}" y2="${pad.t+ch}" stroke="var(--border2)" stroke-width="0.5"/>
+    <line x1="${pad.l}" y1="${pad.t+ch}" x2="${pad.l+cw}" y2="${pad.t+ch}" stroke="var(--border2)" stroke-width="0.5"/>`;
+  // Stats
+  const first=vals[0],last=vals[vals.length-1],diff=last-first;
+  document.getElementById('weight-stats').innerHTML=`
+    <div><span style="color:var(--text3)">Start:</span> <strong>${first} lbs</strong></div>
+    <div><span style="color:var(--text3)">Current:</span> <strong>${last} lbs</strong></div>
+    <div><span style="color:var(--text3)">Change:</span> <strong style="color:${diff<=0?'var(--green)':'var(--red)'}">${diff>0?'+':''}${diff.toFixed(1)} lbs</strong></div>
+    <div><span style="color:var(--text3)">Entries:</span> <strong>${weighIns.length}</strong></div>`;
+  // Log
+  logEl.innerHTML=[...weighIns].reverse().map(w=>{
+    const d=new Date(w.logged_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    return `<div class="log-entry"><div><div class="entry-name">${w.weight_lbs} lbs</div><div class="entry-meta">${d}</div></div><button class="del-btn" onclick="deleteWeighIn('${w.id}')">×</button></div>`;
+  }).join('');
+}
+async function deleteWeighIn(id){
+  try{await sbDelete('weigh_ins',id);weighIns=weighIns.filter(w=>w.id!==id);renderWeight();setSyncStatus('ok','Removed');}
+  catch(e){setSyncStatus('err','Delete failed');}
 }
 
 /* ---- LIBRARY ---- */
-function libFilter(f,btn){
-  document.querySelectorAll('#lib-filters .filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');renderLibrary(f);
-}
+function libFilter(f,btn){document.querySelectorAll('#lib-filters .filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderLibrary(f);}
 function renderLibrary(f){
   let ws=WORKOUTS;
-  if(f==='15')ws=ws.filter(w=>w.mins<=15);
-  else if(f==='30')ws=ws.filter(w=>w.mins>15);
-  else if(f!=='all')ws=ws.filter(w=>w.focus===f);
+  if(f==='15')ws=ws.filter(w=>w.mins<=15);else if(f==='30')ws=ws.filter(w=>w.mins>15);else if(f!=='all')ws=ws.filter(w=>w.focus===f);
   document.getElementById('library-content').innerHTML=ws.map(w=>`
     <div style="background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1rem;margin-bottom:12px">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-        <div><h3 style="font-size:15px;font-weight:500;margin-bottom:4px">${w.name}</h3>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+        <div><h3 style="font-size:15px;font-weight:500;margin-bottom:3px">${w.name}</h3>
         <div style="font-size:12px;color:var(--text2)">${w.mins} min · Phases: ${w.phase.map(p=>'P'+p).join(', ')}</div></div>
         <div><span class="tag tag-${w.focus}">${w.focus}</span><span class="tag tag-${w.mins<=15?'15':'30'}">${w.mins} min</span></div>
       </div>
-      ${w.exercises.map((e,i)=>`
-        <div class="ex-item">
-          <div class="ex-header" onclick="toggleTip('lib-${w.id}-${i}')">
-            <span class="ex-name">${e.name}</span>
-            <span style="display:flex;align-items:center;gap:8px">
-              <span class="ex-sets">${e.sets}</span>
-              <span class="ex-toggle">▸ how-to</span>
-            </span>
-          </div>
-          <div class="ex-tip" id="lib-${w.id}-${i}">
-            <div class="tip-what">Works: ${e.tip.what}</div>
-            <div style="margin-top:4px"><strong>How:</strong> ${e.tip.how}</div>
-            <div style="margin-top:4px;color:var(--amber-text)"><strong>Watch out:</strong> ${e.tip.watch}</div>
-          </div>
-        </div>`).join('')}
+      ${buildExRows(w.exercises,'lib-'+w.id)}
     </div>`).join('');
 }
 
@@ -662,40 +801,24 @@ function renderLibrary(f){
 function renderGoal(){
   document.getElementById('goal-grid').innerHTML=GOALS.map(g=>`
     <div class="goal-option${selectedGoal&&selectedGoal.id===g.id?' selected':''}" onclick="selectGoal('${g.id}')">
-      <h3>${g.name}</h3><p>${g.desc}</p>
-      <span class="goal-cat">${g.cat}</span>
+      <h3>${g.name}</h3><p>${g.desc}</p><span class="goal-cat">${g.cat}</span>
     </div>`).join('');
   const curr=document.getElementById('goal-current');
-  if(selectedGoal){curr.style.display='block';document.getElementById('goal-current-text').textContent=selectedGoal.name;}
-  else curr.style.display='none';
+  if(selectedGoal){curr.style.display='block';document.getElementById('goal-current-text').textContent=selectedGoal.name;}else curr.style.display='none';
 }
-function selectGoal(id){
-  selectedGoal=GOALS.find(g=>g.id===id)||null;
-  localStorage.setItem('workout-goal-v1',JSON.stringify(selectedGoal));
-  renderGoal();renderTodayBanner();
-}
-function clearGoal(){
-  selectedGoal=null;localStorage.removeItem('workout-goal-v1');
-  renderGoal();renderTodayBanner();
-}
+function selectGoal(id){selectedGoal=GOALS.find(g=>g.id===id)||null;localStorage.setItem('workout-goal-v1',JSON.stringify(selectedGoal));renderGoal();renderTodayBanner();}
+function clearGoal(){selectedGoal=null;localStorage.removeItem('workout-goal-v1');renderGoal();renderTodayBanner();}
 function renderTodayBanner(){
   const b=document.getElementById('goal-banner-today'),nb=document.getElementById('no-goal-banner');
   if(selectedGoal){b.style.display='flex';document.getElementById('goal-text-today').textContent=selectedGoal.name;nb.style.display='none';}
   else{b.style.display='none';nb.style.display='flex';}
 }
 function renderPhaseCard(){
-  const phase=getCurrentPhase();
-  const info=PHASE_INFO[phase-1];
-  document.getElementById('phase-card-today').innerHTML=`
-    <div class="phase-card ${info.cls}">
-      <div class="phase-title">${info.title}</div>
-      <div class="phase-desc">${info.desc}</div>
-    </div>`;
+  const info=PHASE_INFO[getCurrentPhase()-1];
+  document.getElementById('phase-card-today').innerHTML=`<div class="phase-card ${info.cls}"><div class="phase-title">${info.title}</div><div class="phase-desc">${info.desc}</div></div>`;
 }
 
-function render(){
-  renderPhaseCard();renderTodayGrid();renderTodayBanner();renderRec();
-}
+function render(){renderPhaseCard();renderTodayGrid();renderTodayBanner();renderRec();}
 loadData();
 </script>
 </body>
