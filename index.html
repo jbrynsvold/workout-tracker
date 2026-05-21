@@ -762,9 +762,17 @@ function renderDailyResetStatus(){
   const done=didDailyResetToday();
   const el=document.getElementById('daily-reset-status');
   if(!el)return;
-  el.innerHTML=done
-    ?'<div style="background:var(--green-bg);border:0.5px solid var(--green);border-radius:var(--radius-lg);padding:.75rem 1rem;margin-bottom:1rem;font-size:13px;color:var(--green-text)">✓ Daily Reset done today</div>'
-    :'<div style="background:var(--amber-bg);border:0.5px solid var(--amber);border-radius:var(--radius-lg);padding:.75rem 1rem;margin-bottom:1rem;font-size:13px;color:var(--amber-text);display:flex;justify-content:space-between;align-items:center"><span>☀️ Daily Reset not done yet today</span><button class="btn btn-xs" onclick="todayFilter(\'daily\',document.querySelector(\'[onclick*=todayFilter\\\'daily\\\']\\'))" style="font-size:12px">Do it now →</button></div>';
+  if(done){
+    el.innerHTML='<div style="background:var(--green-bg);border:0.5px solid var(--green);border-radius:var(--radius-lg);padding:.75rem 1rem;margin-bottom:1rem;font-size:13px;color:var(--green-text)">✓ Daily Reset done today</div>';
+  } else {
+    el.innerHTML='<div style="background:var(--amber-bg);border:0.5px solid var(--amber);border-radius:var(--radius-lg);padding:.75rem 1rem;margin-bottom:1rem;font-size:13px;color:var(--amber-text);display:flex;justify-content:space-between;align-items:center"><span>☀️ Daily Reset not done yet</span><button class="btn btn-xs" onclick="showDailyReset()" style="font-size:12px">Do it now →</button></div>';
+  }
+}
+function showDailyReset(){
+  todayFilterVal='daily';
+  document.querySelectorAll('#today-filters .filter-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('today-grid').scrollIntoView({behavior:'smooth',block:'start'});
+  renderTodayGrid();
 }
 
 /* ---- TODAY ---- */
