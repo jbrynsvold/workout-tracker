@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jason's Workout Tracker</title>
+<title>💪 Workout Tracker</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -158,6 +159,12 @@ svg.weight-chart{width:100%;height:100%}
 .weigh-in-log{display:flex;flex-direction:column;gap:0}
 
 .empty-state{text-align:center;padding:3rem 1rem;color:var(--text3);font-size:14px}
+.day-popup{position:fixed;z-index:200;background:var(--bg);border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:.85rem 1rem;box-shadow:0 4px 20px rgba(0,0,0,0.12);min-width:180px;max-width:260px;font-size:13px}
+.day-popup h4{font-size:13px;font-weight:500;margin-bottom:8px;color:var(--text)}
+.day-popup .popup-entry{padding:4px 0;border-bottom:0.5px solid var(--border);color:var(--text2)}
+.day-popup .popup-entry:last-child{border-bottom:none}
+.day-popup-close{position:absolute;top:6px;right:8px;background:none;border:none;cursor:pointer;font-size:16px;color:var(--text3);line-height:1}
+.popup-overlay{position:fixed;inset:0;z-index:199}
 @media(max-width:600px){
   .stats-row{grid-template-columns:repeat(2,1fr)}
   .dot-grid{grid-template-columns:repeat(10,1fr)}
@@ -354,6 +361,13 @@ svg.weight-chart{width:100%;height:100%}
     </div>
   </div>
 </div>
+
+<div id="day-popup" class="day-popup" style="display:none">
+  <button class="day-popup-close" onclick="closePopup()">×</button>
+  <h4 id="popup-date"></h4>
+  <div id="popup-entries"></div>
+</div>
+<div class="popup-overlay" id="popup-overlay" style="display:none" onclick="closePopup()"></div>
 
 <script>
 const SUPABASE_URL='https://qzngtdmrlbmigzmbnnid.supabase.co';
@@ -936,7 +950,7 @@ function renderCalendar(){
     const showMonth=d.getDate()===1&&lastMonth!==monthStr;
     const monthLabel=showMonth?`<div style="position:absolute;top:2px;left:3px;font-size:8px;color:${textColor};font-weight:500;line-height:1;text-transform:uppercase">${monthStr}</div>`:'';
     if(showMonth)lastMonth=monthStr;
-    return `<div style="aspect-ratio:1;border-radius:3px;background:${bg};border:${border};position:relative;cursor:${names?'pointer':'default'}" title="${names||dk}">${monthLabel}<div style="position:absolute;bottom:2px;right:3px;font-size:9px;color:${textColor};font-weight:500;line-height:1">${d.getDate()}</div></div>`;
+    return `<div style="aspect-ratio:1;border-radius:3px;background:${bg};border:${border};position:relative;cursor:${names?'pointer':'default'}" ${names?`onclick="showDayPopup('${dk}','${names.replace(/'/g,'').replace(/"/g,'')}',event)"`:''}  title="${dk}">${monthLabel}<div style="position:absolute;bottom:2px;right:3px;font-size:9px;color:${textColor};font-weight:500;line-height:1">${d.getDate()}</div></div>`;
   }).join('');
   const label=sessions.length?`${startDate.toLocaleDateString('en-US',{month:'short',day:'numeric'})} — today`:'Start logging to see your calendar grow';
   el.innerHTML=`<div style="font-size:12px;color:var(--text3);margin-bottom:8px">${label}</div>
@@ -1130,7 +1144,26 @@ function renderPhaseCard(){
   document.getElementById('phase-card-today').innerHTML=`<div class="phase-card ${info.cls}"><div class="phase-title">${info.title}</div><div class="phase-desc">${info.desc}</div></div>`;
 }
 
-function render(){renderPhaseCard();renderTodayGrid();renderTodayBanner();renderRec();renderDailyResetStatus();}
+function showDayPopup(dk,names,event){
+  const daySessions=(sessions.filter(s=>sessionDateKey(s)===dk));
+  if(!daySessions.length)return;
+  const d=new Date(dk+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  document.getElementById('popup-date').textContent=d;
+  document.getElementById('popup-entries').innerHTML=daySessions.map(s=>
+    `<div class="popup-entry">${s.workout_name}${s.duration_mins?' · '+s.duration_mins+' min':''}</div>`
+  ).join('');
+  const popup=document.getElementById('day-popup');
+  popup.style.display='block';
+  document.getElementById('popup-overlay').style.display='block';
+  // Position near click
+  const x=Math.min(event.clientX,window.innerWidth-280);
+  const y=Math.min(event.clientY+10,window.innerHeight-150);
+  popup.style.left=x+'px';popup.style.top=y+'px';
+}
+function closePopup(){
+  document.getElementById('day-popup').style.display='none';
+  document.getElementById('popup-overlay').style.display='none';
+}
 loadData();
 </script>
 </body>
