@@ -189,6 +189,7 @@ svg.weight-chart{width:100%;height:100%}
   <!-- TODAY -->
   <div id="view-today" class="view active">
     <div id="phase-card-today"></div>
+    <div id="daily-reset-status"></div>
     <div id="goal-banner-today" class="goal-banner" style="display:none">
       <div><div class="goal-label">Working toward</div><div class="goal-text" id="goal-text-today"></div></div>
       <button class="btn btn-xs" onclick="switchTab('goal')">Change</button>
@@ -250,6 +251,10 @@ svg.weight-chart{width:100%;height:100%}
       <div class="phase-badge" id="phase-b1">Phase 1 — Foundation (1–30)</div>
       <div class="phase-badge" id="phase-b2">Phase 2 — Build (31–60)</div>
       <div class="phase-badge" id="phase-b3">Phase 3 — Peak (61–90)</div>
+    </div>
+    <div style="background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1.5rem">
+      <div style="font-size:14px;font-weight:500;margin-bottom:1rem">Last 12 weeks</div>
+      <div id="calendar-grid"></div>
     </div>
     <div class="dot-section"><div class="dot-section-label">Phase 1 — Foundation</div><div class="dot-grid" id="dots-1"></div></div>
     <div class="dot-section"><div class="dot-section-label">Phase 2 — Build</div><div class="dot-grid" id="dots-2"></div></div>
@@ -698,8 +703,60 @@ function selectRecommended(){if(!currentRec||!currentRec.workout)return;selectWo
 /* ---- MOOD ---- */
 function setMood(mood,btn){currentMood=mood;document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderRec();}
 
+/* ---- DATE HELPERS ---- */
+function dateKey(date){
+  const d=date||new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function sessionDateKey(s){
+  return dateKey(new Date(s.logged_at));
+}
+function didDailyResetToday(){
+  const today=dateKey();
+  return sessions.some(s=>s.workout_id==='w14'&&sessionDateKey(s)===today);
+}
+function computeStreak(){
+  if(!sessions.length)return{current:0,longest:0};
+  // Get unique active days (non-rest) sorted descending
+  const activeDays=[...new Set(sessions.filter(s=>s.session_type==='workout').map(s=>sessionDateKey(s)))].sort().reverse();
+  if(!activeDays.length)return{current:0,longest:0};
+  const today=dateKey();
+  const yesterday=dateKey(new Date(Date.now()-864e5));
+  // Current streak
+  let current=0;
+  let check=activeDays[0]===today||activeDays[0]===yesterday?activeDays[0]:null;
+  if(check){
+    current=1;
+    for(let i=1;i<activeDays.length;i++){
+      const prev=new Date(check+'T12:00:00');
+      prev.setDate(prev.getDate()-1);
+      const prevKey=dateKey(prev);
+      if(activeDays[i]===prevKey){current++;check=prevKey;}
+      else break;
+    }
+  }
+  // Longest streak
+  let longest=1,run=1;
+  for(let i=1;i<activeDays.length;i++){
+    const prev=new Date(activeDays[i-1]+'T12:00:00');
+    prev.setDate(prev.getDate()-1);
+    if(activeDays[i]===dateKey(prev)){run++;}
+    else run=1;
+    if(run>longest)longest=run;
+  }
+  return{current,longest};
+}
+function renderDailyResetStatus(){
+  const done=didDailyResetToday();
+  const el=document.getElementById('daily-reset-status');
+  if(!el)return;
+  el.innerHTML=done
+    ?'<div style="background:var(--green-bg);border:0.5px solid var(--green);border-radius:var(--radius-lg);padding:.75rem 1rem;margin-bottom:1rem;font-size:13px;color:var(--green-text)">✓ Daily Reset done today</div>'
+    :'<div style="background:var(--amber-bg);border:0.5px solid var(--amber);border-radius:var(--radius-lg);padding:.75rem 1rem;margin-bottom:1rem;font-size:13px;color:var(--amber-text);display:flex;justify-content:space-between;align-items:center"><span>☀️ Daily Reset not done yet today</span><button class="btn btn-xs" onclick="todayFilter(\'daily\',document.querySelector(\'[onclick*=todayFilter\\\'daily\\\']\\'))" style="font-size:12px">Do it now →</button></div>';
+}
+
 /* ---- TODAY ---- */
-function todayFilter(f,btn){todayFilterVal=f;document.querySelectorAll('#today-filters .filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectedWorkout=null;document.getElementById('selected-detail').style.display='none';renderTodayGrid();}
+function todayFilter(f,btn){todayFilterVal=f;document.querySelectorAll('#today-filters .filter-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');selectedWorkout=null;document.getElementById('selected-detail').style.display='none';renderTodayGrid();}
 function renderTodayGrid(){
   const phase=getCurrentPhase();let ws=WORKOUTS.filter(w=>w.phase.includes(phase));
   if(todayFilterVal==='15')ws=ws.filter(w=>w.mins<=15);
@@ -743,47 +800,134 @@ function selectWorkout(id){
 function toggleTip(id){const el=document.getElementById(id);if(el)el.classList.toggle('open');}
 async function logWorkout(){
   if(!selectedWorkout)return;
-  const s={id:'s'+Date.now(),workout_id:selectedWorkout.id,workout_name:selectedWorkout.name,focus:selectedWorkout.focus,duration_mins:selectedWorkout.mins,phase:getCurrentPhase(),session_type:'workout'};
+  const now=new Date();
+  const s={id:'s'+Date.now(),workout_id:selectedWorkout.id,workout_name:selectedWorkout.name,focus:selectedWorkout.focus,duration_mins:selectedWorkout.mins,phase:getCurrentPhase(),session_type:'workout',logged_at:now.toISOString()};
   setSyncStatus('loading','Saving...');
-  try{await sbInsert('workout_sessions',s);sessions.unshift(s);setSyncStatus('ok','Logged!');selectedWorkout=null;currentMood=null;document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));document.getElementById('selected-detail').style.display='none';renderTodayGrid();renderRec();switchTab('progress');}
-  catch(e){setSyncStatus('err','Log failed');}
+  try{
+    await sbInsert('workout_sessions',s);
+    sessions.unshift(s);setSyncStatus('ok','Logged!');
+    selectedWorkout=null;currentMood=null;
+    document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('selected-detail').style.display='none';
+    renderTodayGrid();renderRec();renderDailyResetStatus();switchTab('progress');
+  }catch(e){setSyncStatus('err','Log failed');}
 }
 async function logRest(){
-  const s={id:'s'+Date.now(),workout_id:'rest',workout_name:'Rest / recovery day',focus:'rest',duration_mins:0,phase:getCurrentPhase(),session_type:'rest'};
+  const now=new Date();
+  const s={id:'s'+Date.now(),workout_id:'rest',workout_name:'Rest / recovery day',focus:'rest',duration_mins:0,phase:getCurrentPhase(),session_type:'rest',logged_at:now.toISOString()};
   setSyncStatus('loading','Saving...');
-  try{await sbInsert('workout_sessions',s);sessions.unshift(s);setSyncStatus('ok','Logged!');switchTab('progress');}
+  try{await sbInsert('workout_sessions',s);sessions.unshift(s);setSyncStatus('ok','Logged!');renderDailyResetStatus();switchTab('progress');}
   catch(e){setSyncStatus('err','Log failed');}
 }
 
 /* ---- PROGRESS ---- */
 function renderProgress(){
   const total=sessions.length,workouts=sessions.filter(s=>s.session_type==='workout').length;
+  const resets=sessions.filter(s=>s.workout_id==='w14').length;
   const pct=Math.min(Math.round((total/90)*100),100),phase=getCurrentPhase();
+  const{current,longest}=computeStreak();
+
+  // Streak cards
   document.getElementById('stats-row').innerHTML=`
-    <div class="stat-card"><div class="val">${total}</div><div class="lbl">Sessions</div></div>
+    <div class="stat-card"><div class="val">${current}</div><div class="lbl">Day streak 🔥</div></div>
+    <div class="stat-card"><div class="val">${longest}</div><div class="lbl">Best streak</div></div>
     <div class="stat-card"><div class="val">${workouts}</div><div class="lbl">Workouts</div></div>
-    <div class="stat-card"><div class="val">${total-workouts}</div><div class="lbl">Rest days</div></div>
-    <div class="stat-card"><div class="val">${pct}%</div><div class="lbl">Complete</div></div>`;
+    <div class="stat-card"><div class="val">${resets}</div><div class="lbl">Daily resets</div></div>`;
+
   document.getElementById('prog-bar').style.width=pct+'%';
   document.getElementById('prog-label').textContent=`${total} of 90 sessions · Phase ${phase}: ${['','Foundation','Build','Peak'][phase]}`;
   [1,2,3].forEach(p=>document.getElementById('phase-b'+p).classList.toggle('active-phase',p===phase));
+
   const gb=document.getElementById('goal-banner-progress');
   if(selectedGoal){gb.style.display='flex';document.getElementById('goal-text-progress').textContent=selectedGoal.name;}else gb.style.display='none';
+
+  // Calendar grid — last 90 days
+  renderCalendar();
+
+  // Dot grid (sequential)
   [1,2,3].forEach(p=>{
     const start=(p-1)*30,c=document.getElementById('dots-'+p);c.innerHTML='';
-    for(let i=0;i<30;i++){const d=document.createElement('div');d.className='dot';if(start+i<total){const s=sessions[total-1-(start+i)];d.className='dot '+(s&&s.session_type==='rest'?'rest':'done');}c.appendChild(d);}
+    const workoutSessions=sessions.filter(s=>s.session_type==='workout');
+    for(let i=0;i<30;i++){
+      const d=document.createElement('div');d.className='dot';
+      if(start+i<workoutSessions.length){const s=workoutSessions[workoutSessions.length-1-(start+i)];d.className='dot '+(s&&s.session_type==='rest'?'rest':'done');}
+      c.appendChild(d);
+    }
   });
+
+  // Recent log sorted by date
   const log=document.getElementById('recent-log');
   if(!sessions.length){log.innerHTML='<div class="empty-state">No sessions yet — start today!</div>';return;}
-  log.innerHTML=sessions.slice(0,12).map(s=>{
-    const dt=new Date(s.logged_at).toLocaleDateString('en-US',{month:'short',day:'numeric'});
-    return `<div class="log-entry"><div><div class="entry-name">${s.workout_name}</div><div class="entry-meta">${dt}${s.duration_mins?' · '+s.duration_mins+' min':''} · Phase ${s.phase||1}</div></div><button class="del-btn" onclick="deleteSession('${s.id}')">×</button></div>`;
+  const sorted=[...sessions].sort((a,b)=>new Date(b.logged_at)-new Date(a.logged_at));
+  // Group by date
+  const byDate={};
+  sorted.forEach(s=>{
+    const dk=sessionDateKey(s);
+    if(!byDate[dk])byDate[dk]=[];
+    byDate[dk].push(s);
+  });
+  log.innerHTML=Object.entries(byDate).slice(0,14).map(([dk,daySessions])=>{
+    const d=new Date(dk+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+    const entries=daySessions.map(s=>`
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid var(--border)">
+        <div><div class="entry-name">${s.workout_name}</div><div class="entry-meta">${s.duration_mins?' · '+s.duration_mins+' min':''}</div></div>
+        <button class="del-btn" onclick="deleteSession('${s.id}')">×</button>
+      </div>`).join('');
+    return `<div style="margin-bottom:12px"><div style="font-size:12px;font-weight:500;color:var(--text2);margin-bottom:4px">${d}</div>${entries}</div>`;
   }).join('');
 }
-async function deleteSession(id){if(!confirm('Remove this session?'))return;try{await sbDelete('workout_sessions',id);sessions=sessions.filter(s=>s.id!==id);renderProgress();setSyncStatus('ok','Removed');}catch(e){setSyncStatus('err','Delete failed');}}
-async function resetProgress(){setSyncStatus('loading','Resetting...');try{for(const s of [...sessions])await sbDelete('workout_sessions',s.id);sessions=[];renderProgress();setSyncStatus('ok','Reset');}catch(e){setSyncStatus('err','Reset failed');}}
 
-/* ---- RECORDS ---- */
+function renderCalendar(){
+  const el=document.getElementById('calendar-grid');
+  if(!el)return;
+  // Build date → sessions map
+  const dateMap={};
+  sessions.forEach(s=>{
+    const dk=sessionDateKey(s);
+    if(!dateMap[dk])dateMap[dk]=[];
+    dateMap[dk].push(s);
+  });
+  // Generate last 84 days (12 weeks)
+  const today=new Date();today.setHours(0,0,0,0);
+  const days=[];
+  for(let i=83;i>=0;i--){
+    const d=new Date(today);d.setDate(today.getDate()-i);
+    days.push(d);
+  }
+  // Week headers
+  const weekDays=['S','M','T','W','T','F','S'];
+  const headerHTML=weekDays.map(d=>`<div style="font-size:10px;color:var(--text3);text-align:center;padding-bottom:4px">${d}</div>`).join('');
+  // Pad start
+  const firstDow=days[0].getDay();
+  const padHTML=Array(firstDow).fill('<div></div>').join('');
+  const cellHTML=days.map(d=>{
+    const dk=dateKey(d);
+    const daySessions=dateMap[dk]||[];
+    const hasReset=daySessions.some(s=>s.workout_id==='w14');
+    const hasWorkout=daySessions.some(s=>s.session_type==='workout'&&s.workout_id!=='w14');
+    const hasRest=daySessions.some(s=>s.session_type==='rest');
+    const isToday=dk===dateKey();
+    let bg='var(--bg2)';let title='';
+    if(hasWorkout&&hasReset){bg='var(--green)';title='Workout + Daily Reset';}
+    else if(hasWorkout){bg='var(--green)';title='Workout';}
+    else if(hasReset){bg='#5DCAA5';title='Daily Reset';}
+    else if(hasRest){bg='var(--blue-bg)';title='Rest day';}
+    const border=isToday?'2px solid var(--text)':'0.5px solid var(--border)';
+    const names=daySessions.map(s=>s.workout_name).join(', ');
+    return `<div style="aspect-ratio:1;border-radius:3px;background:${bg};border:${border};cursor:${names?'pointer':'default'}" title="${names||dk}"></div>`;
+  }).join('');
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:8px">${headerHTML}</div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px">${padHTML}${cellHTML}</div>
+    <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:2px;background:var(--green)"></div>Workout</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:2px;background:#5DCAA5"></div>Daily Reset</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:2px;background:var(--blue-bg)"></div>Rest</div>
+    </div>`;
+}
+
+async function deleteSession(id){if(!confirm('Remove this session?'))return;try{await sbDelete('workout_sessions',id);sessions=sessions.filter(s=>s.id!==id);renderProgress();renderDailyResetStatus();setSyncStatus('ok','Removed');}catch(e){setSyncStatus('err','Delete failed');}}
+async function resetProgress(){setSyncStatus('loading','Resetting...');try{for(const s of [...sessions])await sbDelete('workout_sessions',s.id);sessions=[];renderProgress();renderDailyResetStatus();setSyncStatus('ok','Reset');}catch(e){setSyncStatus('err','Reset failed');}}
 function togglePRForm(){
   const f=document.getElementById('pr-form');
   const show=f.style.display==='none';
@@ -963,7 +1107,7 @@ function renderPhaseCard(){
   document.getElementById('phase-card-today').innerHTML=`<div class="phase-card ${info.cls}"><div class="phase-title">${info.title}</div><div class="phase-desc">${info.desc}</div></div>`;
 }
 
-function render(){renderPhaseCard();renderTodayGrid();renderTodayBanner();renderRec();}
+function render(){renderPhaseCard();renderTodayGrid();renderTodayBanner();renderRec();renderDailyResetStatus();}
 loadData();
 </script>
 </body>
