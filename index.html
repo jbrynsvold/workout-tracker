@@ -78,7 +78,7 @@ body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:
 .tag-strength{background:var(--blue-bg);color:var(--blue-text)}
 .tag-mobility{background:var(--purple-bg);color:var(--purple-text)}
 .tag-kettlebell{background:var(--amber-bg);color:var(--amber-text)}
-.tag-15{background:var(--bg2);color:var(--text2)}
+.tag-rehab{background:#FEE4E4;color:#8B1A1A}
 .tag-30{background:var(--coral-bg);color:var(--coral-text)}
 .workout-detail{background:var(--bg2);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1rem}
 .workout-detail h3{font-size:15px;font-weight:500;margin-bottom:1rem}
@@ -181,6 +181,7 @@ svg.weight-chart{width:100%;height:100%}
     <button class="tab" onclick="switchTab('progress')">Progress</button>
     <button class="tab" onclick="switchTab('records')">Records</button>
     <button class="tab" onclick="switchTab('weight')">Weight</button>
+    <button class="tab" onclick="switchTab('valgus')">🦵 Knee fix</button>
     <button class="tab" onclick="switchTab('library')">Library</button>
     <button class="tab" onclick="switchTab('goal')">Goal</button>
   </div>
@@ -218,6 +219,8 @@ svg.weight-chart{width:100%;height:100%}
       <button class="filter-btn" onclick="todayFilter('strength',this)">Strength</button>
       <button class="filter-btn" onclick="todayFilter('mobility',this)">Mobility</button>
       <button class="filter-btn" onclick="todayFilter('kettlebell',this)">Kettlebell</button>
+      <button class="filter-btn" onclick="todayFilter('rehab',this)">🦵 Rehab</button>
+      <button class="filter-btn" onclick="todayFilter('daily',this)">☀️ Daily reset</button>
       <button class="filter-btn" onclick="todayFilter('15',this)">15 min</button>
       <button class="filter-btn" onclick="todayFilter('30',this)">30 min</button>
     </div>
@@ -312,6 +315,13 @@ svg.weight-chart{width:100%;height:100%}
     <div id="wi-log"></div>
   </div>
 
+  <!-- VALGUS PROGRESSION -->
+  <div id="view-valgus" class="view">
+    <div class="section-header"><h2>🦵 Knee fix — Valgus correction</h2></div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">A 4-stage progression to fix your hip collapse, runner's knee, and foot pain. Each stage unlocks after enough total sessions. Work through them in order — don't skip ahead.</p>
+    <div id="valgus-content"></div>
+  </div>
+
   <!-- LIBRARY -->
   <div id="view-library" class="view">
     <div class="section-header"><h2>Workout library</h2></div>
@@ -346,7 +356,7 @@ const SUPABASE_KEY='sb_publishable_WeYWprBTVZahREoBRj4Qgg_5lS6AvYO';
 const H={'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY};
 
 const PHASE_INFO=[
-  {phase:1,cls:'p1',title:'Phase 1 — Foundation',desc:'Sessions 1–30. Build the habit and fight stiffness. Prioritize mobility 2x per week. Keep strength sessions light and controlled. KB swings are your best bang-for-buck. Rest days count.'},
+  {phase:1,cls:'p1',title:'Phase 1 — Foundation',desc:'Sessions 1–30. Build the habit and fight stiffness. Runner\'s knee priority: do the Hip & Knee Rehab workout at least 2x per week — lateral band walks, clamshells, and glute bridges are your most important exercises right now. Mobility 2x per week. KB swings are your best bang-for-buck. Rest days count.'},
   {phase:2,cls:'p2',title:'Phase 2 — Build',desc:'Sessions 31–60. Habit is established — now add load. KB complexes and Turkish get-ups unlock here. Aim for 4 active sessions per week. Mobility shifts to maintenance.'},
   {phase:3,cls:'p3',title:'Phase 3 — Peak',desc:'Sessions 61–90. Full library available. Push harder. Test yourself weekly — max pushups, longest plank, KB endurance. The last week is a victory lap.'}
 ];
@@ -381,6 +391,8 @@ const WORKOUTS=[
     {name:'Reverse lunges',sets:'3×10 each',tip:{what:'Quads, glutes, balance',how:'Step back, lower back knee toward floor, push up from front foot.',watch:'Easier on knees than forward lunges — right starting point.'}},
     {name:'Glute bridge',sets:'3×15',tip:{what:'Glutes and hamstrings',how:'Lie on back, knees bent. Drive hips up, squeeze glutes hard at top. Hold 1 sec.',watch:"Squeeze at the top. Don't just bounce up and down."}},
     {name:'Lateral band walk',sets:'3×15 each',tip:{what:'Glute medius — prevents knee and back problems',how:'Band around ankles. Slight squat. Step sideways maintaining band tension.',watch:"Keep toes forward, maintain squat position. Don't let band snap knees in."}},
+    {name:'Clamshells',sets:'3×15 each side',tip:{what:'Glute medius — key muscle for runner\'s knee prevention',how:'Lie on side, knees bent at 90°, feet stacked. Open top knee up like a clamshell. Lower slowly.',watch:"Don't let hips roll back. Movement only from the hip rotating."}},
+    {name:'Single-leg calf raises',sets:'3×15 each',tip:{what:'Calf, Achilles, foot arch — protects ankle and knee',how:'Stand on one foot. Rise onto toes slowly (2 sec up), lower slowly (3 sec down).',watch:'Slow lowering is where the work is. Keep your arch from collapsing.'}},
     {name:'Calf raises',sets:'3×20',tip:{what:'Calves — important for ankle stability',how:'Rise up onto toes slowly, lower slowly.',watch:'Slow down the lowering. That is the work.'}}
   ]},
   {id:'w5',name:'Quick full body',focus:'strength',mins:15,phase:[1,2,3],exercises:[
@@ -432,16 +444,83 @@ const WORKOUTS=[
     {name:'Pushup to T-rotation',sets:'3×8 each',tip:{what:'Chest, shoulders, core rotation',how:'Do a pushup, then at top rotate into side plank with arm raised, hold 1 sec.',watch:'Rotation is from thoracic spine. Control it.'}},
     {name:'DB curl to press',sets:'3×10',tip:{what:'Biceps and shoulders',how:'Curl to shoulder height, then press overhead.',watch:"Two distinct movements — don't rush them together."}}
   ]},
+  {id:'w13',name:'Hip & Knee Rehab',focus:'rehab',mins:15,phase:[1,2,3],exercises:[
+    {name:'Clamshells',sets:'3×15 each side',tip:{what:'Glute medius — the #1 muscle for fixing runner\'s knee',how:'Lie on your side, knees bent at 90°, feet together. Keep feet stacked and open your top knee up like a clamshell. Lower slowly.',watch:'Don\'t let your hips roll backward to get more range. The movement should only come from your hip rotating. Put a hand on your hip to feel if it tilts.'}},
+    {name:'Lateral band walk',sets:'3×15 each direction',tip:{what:'Glute medius and hip abductors — directly prevents knee cave when running',how:'Band around ankles or above knees. Slight squat position. Step sideways maintaining tension. Go 15 steps each direction.',watch:'Keep toes forward and maintain the squat position throughout. Don\'t let the band snap your knees inward.'}},
+    {name:'Glute bridge',sets:'3×15',tip:{what:'Glutes and hamstrings — powers your hip extension so your knee doesn\'t have to absorb as much',how:'Lie on back, knees bent. Drive hips up, squeeze glutes hard at the top. Hold 1 sec, lower controlled.',watch:'Squeeze at the top. This is the whole exercise — don\'t just bounce up and down.'}},
+    {name:'Single-leg calf raises',sets:'3×15 each side',tip:{what:'Calf, Achilles, and foot arch — builds ankle stability that protects your foot and knee',how:'Stand on one foot at the edge of a step or flat floor. Rise up onto your toes slowly (2 sec up), lower slowly (3 sec down).',watch:'The slow lowering is where the strength gains happen. If your foot arch collapses outward, you\'re going too fast.'}},
+    {name:'Couch stretch',sets:'60 sec each side',tip:{what:'Hip flexors and quads — tightness here tilts your pelvis and stresses the knee',how:'Back knee on floor, back foot up on couch. Front leg at 90°. Tuck pelvis and shift forward until you feel it in the front of the back hip.',watch:'Glute squeeze on the back leg is what makes this effective. Without it you\'re just hanging there.'}},
+    {name:'Standing quad stretch',sets:'45 sec each side',tip:{what:'Quads — tight quads pull the kneecap up and compress the joint',how:'Stand on one leg, pull the other foot toward your glutes. Keep knees together, stand tall.',watch:'Don\'t lean forward. Stay upright and squeeze the glute of the standing leg for balance.'}}
+  ]},
   {id:'w12',name:'Mobility & breathwork',focus:'mobility',mins:15,phase:[1,2,3],exercises:[
     {name:'Box breathing',sets:'3 min',tip:{what:'Nervous system regulation — lowers cortisol, improves recovery',how:'Inhale 4 counts, hold 4, exhale 4, hold 4. Repeat.',watch:'Feels weird for 30 seconds. Stick with it.'}},
     {name:'Hip flexor stretch',sets:'90 sec each',tip:{what:'Hip flexors — shortens from sitting, causes low back pain',how:'Lunge, back knee on floor. Tuck pelvis under and shift forward.',watch:'Pelvic tuck is what makes this effective.'}},
     {name:'Thoracic extension over foam roll',sets:'2 min',tip:{what:'Thoracic spine — undoes forward rounding from screens',how:'Foam roll perpendicular to spine. Lie back over it. Let gravity extend your spine.',watch:'Work mid-back between shoulder blades, not lower back.'}},
     {name:"Child's pose to cobra",sets:'10 reps',tip:{what:'Full spinal flexion and extension',how:"From child's pose flow into cobra. Slow rhythm.",watch:'In cobra, keep glutes relaxed. Extension from thoracic, not just lower back.'}},
     {name:'Seated twist',sets:'8 each side',tip:{what:'Thoracic rotation and lumbar relief',how:'Sit cross-legged. Hand on opposite knee, one behind. Rotate and hold 3 sec.',watch:'Sit tall first, then rotate.'}}
+  ]},
+  {id:'w14',name:'Daily Reset (morning)',focus:'rehab',mins:10,phase:[1,2,3],exercises:[
+    {name:'Lying hip rotation warmup',sets:'10 reps each direction',tip:{what:'Lubricates the hip joint and addresses your morning hip pop',how:'Lie on your back, knees bent. Let both knees fall slowly to one side, hold 3 sec, rotate to the other. Then make slow circles with each knee individually.',watch:'This should be the very first thing you do. Before you get out of bed if possible. The hip pop happens because the joint is cold and dry — this fixes that.'}},
+    {name:'Hip 90/90 stretch',sets:'60 sec each side',tip:{what:'Hip internal and external rotation — directly addresses your femoral rotation bias',how:'Sit on floor, both knees at 90°. Lean into the front hip, feel the stretch in the outer hip. Switch sides.',watch:'Right side will feel significantly tighter — spend an extra 30 sec there.'}},
+    {name:'Peroneal stretch (RIGHT focus)',sets:'2×60 sec right / 1×30 sec left',tip:{what:'Outer shin — overworking due to your right side rotation pattern',how:'Sit on floor, cross right foot over left knee. Hold top of right foot, point toes downward and inward. Hold.',watch:'Gentle and sustained. This muscle is chronically fatigued. Don\'t force it.'}},
+    {name:'Glute medius activation (standing)',sets:'10 reps each side, 5 sec hold',tip:{what:'Waking up the glute medius before it has to work all day',how:'Stand on one leg. Use the screw cue. Feel the outer glute engage and hold 5 sec. Switch.',watch:'Do this before your first walk of the day. You\'re priming the muscle to fire correctly before it has to stabilize every step.'}},
+    {name:'Calf and foot mobilization',sets:'30 sec each foot',tip:{what:'Foot and ankle — wakes up the arch and peroneal chain before loading',how:'Stand on one foot. Slowly roll from heel to toe, then make slow ankle circles both directions.',watch:'Right foot especially — you\'re addressing the compensatory patterns in the arch and outer edge.'}}
   ]}
 ];
 
 // All trackable exercises (weighted/bodyweight)
+const VALGUS_STAGES=[
+  {
+    id:'v1',stage:1,name:'Stage 1 — Activate',mins:15,
+    desc:'Isolated activation. Your glute medius has been dormant — wake it up before asking it to do anything harder. Right side is 20-30% weaker than left — give it one extra set on every unilateral exercise. Do this every day until the clamshell burns instead of stretches.',
+    unlock:0,
+    exercises:[
+      {name:'Glute medius activation test',sets:'30 sec each side',tip:{what:'Finding the muscle before loading it',how:'Stand on one leg. Put your hand on your outer hip (an inch behind the bony point). Push your knee gently outward without moving your foot. Feel for the contraction under your hand.',watch:"If you feel nothing, press your outer knee into a wall instead. You must be able to feel this muscle before moving on."}},
+      {name:'Banded clamshells (RIGHT +1 set)',sets:'3×15 left / 4×15 right (slow)',tip:{what:'Glute medius isolation — your most important exercise right now',how:'Band just above knees. Lie on side, knees at 90°. Before opening, intentionally squeeze your outer glute. 3 sec open, hold 2 sec at top, 3 sec lower.',watch:"If it feels like a stretch and not a burn, your band is too loose or you're not pre-activating the glute. Move band closer to ankles for more resistance. Right side gets an extra set until it matches the left."}},
+      {name:'Glute bridge with knee-out press',sets:'3×12',tip:{what:'Glute activation in a loaded position',how:'Band above knees. Normal glute bridge position. As you drive hips up, ALSO press your knees outward against the band. Hold top 2 sec.',watch:'Two things at once — hip up AND knees out. The knee press is what adds glute medius work on top of the regular bridge.'}},
+      {name:'Standing screw cue practice',sets:'10 reps, 5 sec hold each',tip:{what:'Teaching your nervous system the pattern you need for running',how:'Stand feet hip-width. Without moving feet, create outward rotational tension like unscrewing the floor. Feel glutes engage, arches lift slightly, knees track over toes.',watch:"Right side will feel harder than left — that's expected. Your right femur has a stronger inward rotation default. Hold it longer on the right."}},
+      {name:'Peroneal stretch (right side focus)',sets:'2×60 sec right / 1×60 sec left',tip:{what:'Outer shin muscles — overworking to compensate for your weak right glute medius',how:'Sit on floor, cross right foot over left knee. Hold the top of your right foot and gently point toes downward and inward (like making the sole face upward). Feel the stretch along the outer right shin.',watch:"Don't force it. This muscle is chronically tight because it's been overworking. Gentle sustained pressure, not aggressive. Breathe through it."}},
+      {name:'Hip 90/90 rotations',sets:'2×10',tip:{what:'Hip internal and external rotation — restores the range your glute needs to work through',how:'Sit with both knees bent at 90°, one forward, one to the side. Rotate both hips to switch sides.',watch:'Keep your butt on the floor the whole time.'}}
+    ]
+  },
+  {
+    id:'v2',stage:2,name:'Stage 2 — Load it',mins:20,
+    desc:'Glute is firing in isolation. Now load it with bodyweight in standing positions. Focus on the screw cue on every single rep. Right side still gets one extra set on all unilateral work.',
+    unlock:6,
+    exercises:[
+      {name:'Banded lateral walk',sets:'3×20 each direction',tip:{what:'Glute medius under load, standing — closest exercise to running mechanics',how:'Band above knees. Slight squat. Step sideways 20 steps, keeping tension in band. Screw-outward cue active the whole time.',watch:'Toes stay forward. Do not let the stepping foot turn out. The resistance against the band IS the exercise.'}},
+      {name:'Banded squat with screw cue',sets:'3×12',tip:{what:'Glute medius during loaded knee bend — the pattern you need for running',how:'Band above knees. Feet hip-width. As you lower, actively push knees outward against the band (screw cue). Pause at bottom 2 sec.',watch:'Watch your knees in a mirror if you can. They should track over toes, not cave inward. If they cave, reduce depth until you can control it.'}},
+      {name:'Single-leg glute bridge (RIGHT +1 set)',sets:'3×10 left / 4×10 right',tip:{what:'Glute isolation on one leg — directly targets your right side weakness',how:'Normal bridge setup. Extend one leg straight. Drive through the heel of the bent leg to lift hips.',watch:'Your hips will want to rotate or drop to the unsupported side. Resist that. Level hips throughout.'}},
+      {name:'Step-up with screw cue',sets:'3×10 each side',tip:{what:'Single-leg loading with hip stability — stair climbing pattern',how:'Step onto a low box or step. As you push through the top foot to stand up, use the screw cue. Control the descent.',watch:'The standing knee should stay over the toes the whole time. If it caves inward at any point, that is the pattern causing your runner\'s knee.'}},
+      {name:'Single-leg calf raises (RIGHT +1 set)',sets:'3×15 left / 4×15 right',tip:{what:'Foot and ankle stability — your right peroneal chain needs extra work',how:'One foot. Slow rise (2 sec), slow lower (3 sec).',watch:'Arch should not collapse outward as you fatigue. Right side gets extra set.'}}
+    ]
+  },
+  {
+    id:'v3',stage:3,name:'Stage 3 — Single leg',mins:20,
+    desc:'Hip stable in double-leg movements. Now train single-leg control — this is the running position. Every rep should have the screw cue active. Right side extra set continues.',
+    unlock:15,
+    exercises:[
+      {name:'Reverse lunge with screw cue',sets:'3×10 each side',tip:{what:'Single-leg loading with knee tracking — exactly what running requires',how:'Step back into lunge. Front knee stays over toes (screw cue on the front foot). Push back up from the front heel.',watch:'Watch that front knee. Any inward cave means your glute medius is still not strong enough to hold it — slow down and focus.'}},
+      {name:'KB single-leg deadlift',sets:'3×8 each side',tip:{what:'Posterior chain + hip stability on one leg',how:'Hold KB in one hand, hinge forward on opposite leg like a see-saw. Standing leg knee stays soft and tracks over toes via screw cue.',watch:'Hips stay square to floor. The lifted hip wants to rotate up — resist it. That rotation is your glute medius working.'}},
+      {name:'Skater squat (assisted)',sets:'3×8 each side',tip:{what:'The hardest single-leg exercise before running — builds the exact strength pattern',how:'Stand on one leg, hold a door handle or wall lightly for balance. Lower your back knee toward the floor (like a reverse lunge but the back foot never touches down). Push back up.',watch:'Use as little assistance as you need. The goal is to eventually not need the support. Knee tracks over toes the whole way.'}},
+      {name:'Lateral band walk — long set',sets:'2×30 each direction',tip:{what:'Glute medius endurance — you need this to last a mile of running',how:'Same as before but longer. 30 steps each direction, 2 rounds.',watch:'Form matters more than speed. Slow and controlled with screw cue active.'}},
+      {name:'Standing hip abduction (RIGHT +1 set)',sets:'3×15 left / 4×15 right',tip:{what:'Direct glute medius strengthening — mimics single-leg stance phase of running',how:'Band around ankles. Stand on one leg. Lift outer leg directly to side, hold 1 sec, lower slowly. Standing knee slightly bent and screwed outward.',watch:"Don't lean torso to the side to get the leg up. Stand tall. The lean means your glute medius isn't strong enough yet."}}
+    ]
+  },
+  {
+    id:'v4',stage:4,name:'Stage 4 — Running ready',mins:20,
+    desc:'Single-leg control established. Now train dynamic movement with the screw cue. When these feel natural, you\'re ready to run without knee pain.',
+    unlock:25,
+    exercises:[
+      {name:'Banded jump squat (small)',sets:'3×8',tip:{what:'Explosive glute activation — training the landing pattern',how:'Band above knees. Small squat, small jump, land softly with knees OUT (screw cue on landing). Land quietly.',watch:'The landing is everything. Knees must NOT cave on impact. Start with tiny hops and build up.'}},
+      {name:'Lateral shuffle (banded)',sets:'3×20 each direction',tip:{what:'Dynamic lateral glute medius — running speed hip stability',how:'Band above knees, athletic stance. Quick lateral shuffles, staying low. Screw cue active throughout.',watch:'Stay low. If you stand up between shuffles you lose the glute engagement.'}},
+      {name:'Single-leg hop and hold',sets:'3×8 each side',tip:{what:'The running landing pattern — single-leg impact absorption',how:'Stand on one leg. Small hop straight up. Land and HOLD for 3 seconds. Knee tracks over toes, screw cue active on landing.',watch:'The hold after landing is the whole exercise. That\'s the moment your knee was collapsing during running. Now you\'re training it not to.'}},
+      {name:'Step-down test',sets:'3×10 each side',tip:{what:'Functional valgus test — are you fixed?',how:'Stand on a step, one foot hanging. Slowly lower the hanging heel toward the floor and back up. Watch your standing knee.',watch:'If your standing knee stays over your toes throughout — you\'re ready to run. If it caves inward at any point — stay in Stage 3 a bit longer.'}},
+      {name:'Run-walk intervals',sets:'10 min — 1 min run, 1 min walk',tip:{what:'Returning to running with the new pattern',how:'Jog at easy pace. Screw cue active. Foot landing under hips. Short strides. If knee starts to hurt, walk and activate glutes before running again.',watch:"Stop if you feel knee pain. That's your glute medius fatiguing. Walk, activate, try again. Don't push through it."}}
+    ]
+  }
+];
+
 const TRACKABLE=[
   {id:'e1',name:'Pushups',unit:'bodyweight'},
   {id:'e2',name:'DB shoulder press',unit:'lbs'},
@@ -460,7 +539,9 @@ const TRACKABLE=[
   {id:'e15',name:'KB Turkish get-up',unit:'lbs'},
   {id:'e16',name:'Full body DB circuit',unit:'lbs'},
   {id:'e17',name:'Side plank',unit:'seconds'},
-  {id:'e18',name:'Hollow body hold',unit:'seconds'}
+  {id:'e18',name:'Hollow body hold',unit:'seconds'},
+  {id:'e19',name:'Clamshells',unit:'bodyweight'},
+  {id:'e20',name:'Single-leg calf raises',unit:'bodyweight'}
 ];
 
 const GOALS=[
@@ -508,14 +589,69 @@ async function loadData(){
 function todayStr(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 
 function switchTab(t){
-  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['today','progress','records','weight','library','goal'][i]===t));
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['today','progress','records','weight','valgus','library','goal'][i]===t));
   document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
   document.getElementById('view-'+t).classList.add('active');
   if(t==='progress')renderProgress();
   if(t==='records')renderRecords();
   if(t==='weight')renderWeight();
+  if(t==='valgus')renderValgus();
   if(t==='library')renderLibrary('all');
   if(t==='goal')renderGoal();
+}
+
+function getCurrentStage(){
+  const n=sessions.length;
+  for(let i=VALGUS_STAGES.length-1;i>=0;i--){if(n>=VALGUS_STAGES[i].unlock)return VALGUS_STAGES[i].stage;}
+  return 1;
+}
+
+function renderValgus(){
+  const currentStage=getCurrentStage();
+  const total=sessions.length;
+  const content=document.getElementById('valgus-content');
+  content.innerHTML=VALGUS_STAGES.map(stage=>{
+    const locked=total<stage.unlock;
+    const active=stage.stage===currentStage;
+    const done=stage.stage<currentStage;
+    const borderColor=done?'var(--green)':active?'var(--blue)':'var(--border)';
+    const bg=done?'var(--green-bg)':active?'var(--blue-bg)':'var(--bg)';
+    const badge=done?'<span style="font-size:11px;padding:2px 8px;border-radius:20px;background:var(--green);color:#E1F5EE;margin-left:8px">Complete</span>':active?'<span style="font-size:11px;padding:2px 8px;border-radius:20px;background:var(--blue);color:#E1F5EE;margin-left:8px">Current stage</span>':'';
+    const lockMsg=locked?`<div style="font-size:12px;color:var(--text3);margin-top:8px">🔒 Unlocks at ${stage.unlock} total sessions (you have ${total})</div>`:'';
+    const exRows=locked?'':`<div style="margin-top:12px">${stage.exercises.map((e,i)=>`
+      <div class="ex-item">
+        <div class="ex-header" onclick="toggleTip('vg-${stage.id}-${i}')">
+          <span class="ex-name">${e.name}</span>
+          <span style="display:flex;align-items:center;gap:8px"><span class="ex-sets">${e.sets}</span><span class="ex-toggle">▸ how-to</span></span>
+        </div>
+        <div class="ex-tip" id="vg-${stage.id}-${i}">
+          <div class="tip-what">Works: ${e.tip.what}</div>
+          <div style="margin-top:4px"><strong>How:</strong> ${e.tip.how}</div>
+          <div style="margin-top:4px;color:var(--amber-text)"><strong>Watch out:</strong> ${e.tip.watch}</div>
+        </div>
+      </div>`).join('')}
+      ${active?`<div style="margin-top:1rem"><button class="btn btn-green btn-sm" onclick="logValgusSession('${stage.id}','${stage.name}')">Log this session ✓</button></div>`:''}
+    </div>`;
+    return `<div style="background:${bg};border:${active?'2px':'0.5px'} solid ${borderColor};border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:12px;opacity:${locked?'.5':'1'}">
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:6px">
+        <span style="font-size:15px;font-weight:500">${stage.name}</span>${badge}
+        <span style="font-size:12px;color:var(--text2);margin-left:auto">${stage.mins} min</span>
+      </div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.6">${stage.desc}</div>
+      ${lockMsg}${exRows}
+    </div>`;
+  }).join('');
+}
+
+async function logValgusSession(stageId,stageName){
+  const stage=VALGUS_STAGES.find(s=>s.id===stageId);if(!stage)return;
+  const s={id:'s'+Date.now(),workout_id:stageId,workout_name:stageName,focus:'rehab',duration_mins:stage.mins,phase:getCurrentPhase(),session_type:'workout'};
+  setSyncStatus('loading','Saving...');
+  try{
+    await sbInsert('workout_sessions',s);
+    sessions.unshift(s);setSyncStatus('ok','Logged!');
+    renderValgus();renderProgress();
+  }catch(e){setSyncStatus('err','Log failed');}
 }
 
 function getCurrentPhase(){const n=sessions.length;return n<30?1:n<60?2:3;}
@@ -530,15 +666,22 @@ function computeRec(){
   const noMobility=recent.filter(f=>f==='mobility').length===0&&sessions.length>=3;
   const noKB=recent.filter(f=>f==='kettlebell').length===0&&sessions.length>=4;
 
-  if(currentMood==='sore'){const w=available.find(w=>w.id==='w6')||available.find(w=>w.focus==='mobility'&&w.mins<=15);return{workout:w,why:"You're sore — recovery day. This will help more than pushing through."};}
-  if(currentMood==='low'){const w=available.find(w=>w.focus==='mobility'&&w.mins<=15)||available.find(w=>w.mins<=15);return{workout:w,why:"Low energy = mobility day. 15 minutes, nothing heroic. You'll feel better after."};}
+  if(currentMood==='sore'){const w=available.find(w=>w.id==='w14')||available.find(w=>w.id==='w13');return{workout:w,why:"You're sore — Daily Reset is perfect. 10 minutes, addresses your hip pop, peroneal tightness, and right side bias. Then rest."};}
+  if(currentMood==='low'){const w=available.find(w=>w.id==='w14')||available.find(w=>w.id==='w13');return{workout:w,why:"Low energy — do the Daily Reset at minimum. 10 minutes targeting your right side chain. That's a win."};}
   if(currentMood==='fired'){const w=available.find(w=>w.id==='w7')||available.find(w=>w.focus==='kettlebell'&&w.mins>=20)||available.find(w=>w.mins>=30);return{workout:w,why:"You're fired up — use it. High-output session."};}
-  if(last2Same&&last==='strength'){const w=available.find(w=>w.focus==='mobility');return{workout:w,why:"Two strength sessions in a row. Your body needs mobility work — and it'll make your next strength session better."};}
-  if(noMobility){const w=available.find(w=>w.focus==='mobility');return{workout:w,why:"No mobility work recently. Given your stiffness goals, this should be a priority."};}
+
+  // Runner's knee priority: if no rehab/glute work in last 2 sessions, surface it
+  const recentIds=sessions.slice(0,2).map(s=>s.workout_id);
+  const rehabIds=['w13','w4','w3','v1','v2','v3','v4'];
+  const noRecentRehab=!recentIds.some(id=>rehabIds.includes(id))&&sessions.length>=2;
+  if(noRecentRehab){const w=available.find(w=>w.id==='w13');return{workout:w,why:"No hip/glute work in your last 2 sessions. Check the 🦵 Knee fix tab for your valgus progression, or do Hip & Knee Rehab now."};}
+
+  if(last2Same&&last==='strength'){const w=available.find(w=>w.id==='w13')||available.find(w=>w.focus==='mobility');return{workout:w,why:"Two strength sessions in a row. Hip & Knee Rehab now — this directly addresses your running issues."};}
+  if(noMobility){const w=available.find(w=>w.focus==='mobility');return{workout:w,why:"No mobility work recently. Given your stiffness and runner's knee, this is a priority."};}
   if(noKB){const w=available.find(w=>w.focus==='kettlebell');return{workout:w,why:"No KB work in a while. Swings are your best single exercise for strength and mobility combined."};}
-  if(last==='mobility'){const w=available.find(w=>w.focus==='strength'&&w.mins<=30)||available.find(w=>w.focus==='strength');return{workout:w,why:"You did mobility last time. Build some strength on top of that looseness."};}
+  if(last==='mobility'||last==='rehab'){const w=available.find(w=>w.focus==='strength'&&w.mins<=30)||available.find(w=>w.focus==='strength');return{workout:w,why:"You did mobility/rehab last time. Build some strength on top of that looseness."};}
   if(currentMood==='average'){const w=available.find(w=>w.id==='w8')||available.find(w=>w.mins<=20);return{workout:w,why:"Average day — solid 20-min core session. Not too taxing, still meaningful."};}
-  if(phase===1){const w=available.find(w=>w.id==='w3')||available.find(w=>w.focus==='kettlebell');return{workout:w,why:"In Phase 1, KB swings are your best investment. Strength and mobility at once."};}
+  if(phase===1){const w=available.find(w=>w.id==='w13');return{workout:w,why:"In Phase 1, Hip & Knee Rehab is your most important workout. Do it at least every other session."};}
   const w=available.find(w=>w.focus==='strength'&&w.mins===30)||available[0];
   return{workout:w,why:"A solid balanced session for where you are in the program."};
 }
@@ -561,6 +704,8 @@ function renderTodayGrid(){
   const phase=getCurrentPhase();let ws=WORKOUTS.filter(w=>w.phase.includes(phase));
   if(todayFilterVal==='15')ws=ws.filter(w=>w.mins<=15);
   else if(todayFilterVal==='30')ws=ws.filter(w=>w.mins>15);
+  else if(todayFilterVal==='rehab')ws=ws.filter(w=>w.focus==='rehab');
+  else if(todayFilterVal==='daily')ws=ws.filter(w=>w.id==='w14');
   else if(todayFilterVal!=='all')ws=ws.filter(w=>w.focus===todayFilterVal);
   document.getElementById('today-grid').innerHTML=ws.map(w=>`
     <div class="workout-card${selectedWorkout&&selectedWorkout.id===w.id?' selected':''}${currentRec&&currentRec.workout&&currentRec.workout.id===w.id&&!(selectedWorkout&&selectedWorkout.id===w.id)?' recommended':''}" onclick="selectWorkout('${w.id}')">
