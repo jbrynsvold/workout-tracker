@@ -900,52 +900,55 @@ function renderProgress(){
 function renderCalendar(){
   const el=document.getElementById('calendar-grid');
   if(!el)return;
-  // Build date → sessions map
   const dateMap={};
-  sessions.forEach(s=>{
-    const dk=sessionDateKey(s);
-    if(!dateMap[dk])dateMap[dk]=[];
-    dateMap[dk].push(s);
-  });
-  // Generate last 84 days (12 weeks)
+  sessions.forEach(s=>{const dk=sessionDateKey(s);if(!dateMap[dk])dateMap[dk]=[];dateMap[dk].push(s);});
   const today=new Date();today.setHours(0,0,0,0);
-  const days=[];
-  for(let i=83;i>=0;i--){
-    const d=new Date(today);d.setDate(today.getDate()-i);
-    days.push(d);
+  const todayKey=dateKey(today);
+  let startDate=new Date(today);
+  if(sessions.length){
+    const sorted=[...sessions].sort((a,b)=>new Date(a.logged_at)-new Date(b.logged_at));
+    const firstKey=sessionDateKey(sorted[0]);
+    startDate=new Date(firstKey+'T12:00:00');startDate.setHours(0,0,0,0);
   }
-  // Week headers
-  const weekDays=['S','M','T','W','T','F','S'];
-  const headerHTML=weekDays.map(d=>`<div style="font-size:10px;color:var(--text3);text-align:center;padding-bottom:4px">${d}</div>`).join('');
-  // Pad start
+  const days=[];const cursor=new Date(startDate);
+  while(cursor<=today){days.push(new Date(cursor));cursor.setDate(cursor.getDate()+1);}
   const firstDow=days[0].getDay();
-  const padHTML=Array(firstDow).fill('<div></div>').join('');
+  const weekDays=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const headerHTML=weekDays.map(d=>`<div style="font-size:10px;color:var(--text3);text-align:center;padding-bottom:5px;font-weight:500">${d}</div>`).join('');
+  const padCells=Array(firstDow).fill('<div></div>').join('');
+  let lastMonth='';
   const cellHTML=days.map(d=>{
     const dk=dateKey(d);
     const daySessions=dateMap[dk]||[];
     const hasReset=daySessions.some(s=>s.workout_id==='w14');
     const hasWorkout=daySessions.some(s=>s.session_type==='workout'&&s.workout_id!=='w14');
     const hasRest=daySessions.some(s=>s.session_type==='rest');
-    const isToday=dk===dateKey();
-    let bg='var(--bg2)';let title='';
-    if(hasWorkout&&hasReset){bg='var(--green)';title='Workout + Daily Reset';}
-    else if(hasWorkout){bg='var(--green)';title='Workout';}
-    else if(hasReset){bg='#5DCAA5';title='Daily Reset';}
-    else if(hasRest){bg='var(--blue-bg)';title='Rest day';}
+    const isToday=dk===todayKey;
+    let bg,textColor='rgba(255,255,255,0.85)';
+    if(hasWorkout&&hasReset)bg='linear-gradient(135deg,#1D9E75 50%,#5DCAA5 50%)';
+    else if(hasWorkout)bg='#1D9E75';
+    else if(hasReset)bg='#5DCAA5';
+    else if(hasRest){bg='var(--blue-bg)';textColor='var(--text3)';}
+    else{bg='var(--bg2)';textColor='var(--text3)';}
     const border=isToday?'2px solid var(--text)':'0.5px solid var(--border)';
     const names=daySessions.map(s=>s.workout_name).join(', ');
-    return `<div style="aspect-ratio:1;border-radius:3px;background:${bg};border:${border};cursor:${names?'pointer':'default'}" title="${names||dk}"></div>`;
+    const monthStr=d.toLocaleDateString('en-US',{month:'short'});
+    const showMonth=d.getDate()===1&&lastMonth!==monthStr;
+    const monthLabel=showMonth?`<div style="position:absolute;top:2px;left:3px;font-size:8px;color:${textColor};font-weight:500;line-height:1;text-transform:uppercase">${monthStr}</div>`:'';
+    if(showMonth)lastMonth=monthStr;
+    return `<div style="aspect-ratio:1;border-radius:3px;background:${bg};border:${border};position:relative;cursor:${names?'pointer':'default'}" title="${names||dk}">${monthLabel}<div style="position:absolute;bottom:2px;right:3px;font-size:9px;color:${textColor};font-weight:500;line-height:1">${d.getDate()}</div></div>`;
   }).join('');
-  el.innerHTML=`
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:8px">${headerHTML}</div>
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px">${padHTML}${cellHTML}</div>
-    <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap">
-      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:2px;background:var(--green)"></div>Workout</div>
+  const label=sessions.length?`${startDate.toLocaleDateString('en-US',{month:'short',day:'numeric'})} — today`:'Start logging to see your calendar grow';
+  el.innerHTML=`<div style="font-size:12px;color:var(--text3);margin-bottom:8px">${label}</div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px">${headerHTML}</div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px">${padCells}${cellHTML}</div>
+    <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:2px;background:#1D9E75"></div>Workout</div>
       <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:2px;background:#5DCAA5"></div>Daily Reset</div>
-      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:2px;background:var(--blue-bg)"></div>Rest</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:2px;background:linear-gradient(135deg,#1D9E75 50%,#5DCAA5 50%)"></div>Both</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:10px;height:10px;border-radius:2px;background:var(--blue-bg);border:0.5px solid var(--border)"></div>Rest</div>
     </div>`;
 }
-
 async function deleteSession(id){if(!confirm('Remove this session?'))return;try{await sbDelete('workout_sessions',id);sessions=sessions.filter(s=>s.id!==id);renderProgress();renderDailyResetStatus();setSyncStatus('ok','Removed');}catch(e){setSyncStatus('err','Delete failed');}}
 async function resetProgress(){setSyncStatus('loading','Resetting...');try{for(const s of [...sessions])await sbDelete('workout_sessions',s.id);sessions=[];renderProgress();renderDailyResetStatus();setSyncStatus('ok','Reset');}catch(e){setSyncStatus('err','Reset failed');}}
 function togglePRForm(){
