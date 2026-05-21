@@ -358,7 +358,7 @@ svg.weight-chart{width:100%;height:100%}
 <script>
 const SUPABASE_URL='https://qzngtdmrlbmigzmbnnid.supabase.co';
 const SUPABASE_KEY='sb_publishable_WeYWprBTVZahREoBRj4Qgg_5lS6AvYO';
-const H={'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY};
+const H={'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Accept':'application/json'};
 
 const PHASE_INFO=[
   {phase:1,cls:'p1',title:'Phase 1 — Foundation',desc:'Sessions 1–30. Build the habit and fight stiffness. Runner\'s knee priority: do the Hip & Knee Rehab workout at least 2x per week — lateral band walks, clamshells, and glute bridges are your most important exercises right now. Mobility 2x per week. KB swings are your best bang-for-buck. Rest days count.'},
@@ -577,16 +577,28 @@ function setSyncStatus(s,msg){
 async function loadData(){
   setSyncStatus('loading','Loading...');
   try{
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),8000);
     const[s,r,w]=await Promise.all([
       sbGet('workout_sessions','?order=logged_at.desc'),
       sbGet('exercise_records','?order=logged_at.asc'),
       sbGet('weigh_ins','?order=logged_at.asc')
     ]);
+    clearTimeout(timeout);
     sessions=s;records=r;weighIns=w;
     setSyncStatus('ok','Synced');
-  }catch(e){setSyncStatus('err','Offline');sessions=[];records=[];weighIns=[];}
+  }catch(e){
+    console.error('Load error:',e);
+    setSyncStatus('err','Offline — using local data');
+    // Try local backup
+    try{
+      const backup=localStorage.getItem('workout-backup');
+      if(backup){const d=JSON.parse(backup);sessions=d.sessions||[];records=d.records||[];weighIns=d.weighIns||[];}
+    }catch(_){sessions=[];records=[];weighIns=[];}
+  }
+  // Always save local backup
+  try{localStorage.setItem('workout-backup',JSON.stringify({sessions,records,weighIns}));}catch(_){}
   try{const s=localStorage.getItem('workout-goal-v1');if(s)selectedGoal=JSON.parse(s);}catch(_){}
-  // Set today's date in weigh-in form
   document.getElementById('wi-date').value=todayStr();
   render();
 }
